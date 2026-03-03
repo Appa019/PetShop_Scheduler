@@ -47,7 +47,3 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
-
-# Claude
-CLAUDE.md
-.claude/
