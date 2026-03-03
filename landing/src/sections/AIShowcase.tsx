@@ -51,7 +51,7 @@ export default function AIShowcase() {
             <SectionHeading
               badge="Inteligência Artificial"
               title="Três camadas de IA trabalhando pelo seu pet."
-              subtitle="O GPT-5.2 analisa, interpreta e planeja — para que você só precise cuidar."
+              subtitle="Nossa IA de ponta analisa, interpreta e planeja — para que você só precise cuidar."
             />
           </div>
         </ScrollReveal>
@@ -91,19 +91,19 @@ export default function AIShowcase() {
               {/* Blur decorativo */}
               <div
                 className="absolute -top-10 -right-10 w-40 h-40 rounded-full pointer-events-none"
-                style={{ background: 'radial-gradient(circle, rgba(123,94,167,0.08) 0%, transparent 70%)' }}
+                style={{ backgroundColor: 'rgba(123,94,167,0.05)' }}
                 aria-hidden="true"
               />
 
               {/* Header do card */}
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #7B5EA7, #5A3E7A)' }}>
+                  style={{ backgroundColor: '#7B5EA7' }}>
                   <Brain size={14} className="text-white" />
                 </div>
                 <div>
                   <p className="font-display font-bold text-[#2A2140] text-sm">Análise da IA</p>
-                  <p className="text-[10px] text-[#7A7090] font-mono">GPT-5.2 · Vision API</p>
+                  <p className="text-[10px] text-[#7A7090] font-mono">IA de Ponta · Vision API</p>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
                   <CheckCircle2 size={13} style={{ color: '#10B981' }} />

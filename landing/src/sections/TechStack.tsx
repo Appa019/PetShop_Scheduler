@@ -23,7 +23,7 @@ const stacks = [
     title: 'Inteligência Artificial',
     color: '#F59E0B',
     bg: 'rgba(245, 158, 11, 0.08)',
-    techs: ['OpenAI GPT-5.2', 'Responses API', 'Vision API', 'Web Search Tool'],
+    techs: ['OpenAI API', 'Responses API', 'Vision API', 'Web Search Tool'],
   },
   {
     icon: Cloud,

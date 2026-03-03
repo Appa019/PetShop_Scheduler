@@ -59,10 +59,10 @@
     box-shadow: 0 8px 32px rgba(123, 94, 167, 0.16), 0 2px 8px rgba(123, 94, 167, 0.10);
   }
 
-  /* Botão primário — gradiente roxo, forma de pílula */
+  /* Botão primário — roxo sólido, forma de pílula */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white text-sm;
-    background: linear-gradient(135deg, #7B5EA7 0%, #5A3E7A 100%);
+    background-color: #7B5EA7;
     box-shadow: 0 4px 16px rgba(123, 94, 167, 0.30);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   }

@@ -4,7 +4,7 @@ import { ArrowRight, Github, Sparkles, Brain, CalendarCheck } from 'lucide-react
 const stats = [
   { value: '4 Passos', label: 'com IA' },
   { value: '5 Anos', label: 'de cronograma' },
-  { value: 'GPT-5.2', label: 'integrado' },
+  { value: 'IA de Ponta', label: 'integrada' },
 ]
 
 // Cartão flutuante que simula output da IA
@@ -19,7 +19,7 @@ function FloatingAICard() {
     >
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg, #7B5EA7, #5A3E7A)' }}>
+          style={{ backgroundColor: '#7B5EA7' }}>
           <Brain size={14} className="text-white" />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -64,7 +64,7 @@ export default function Hero() {
     <section
       className="relative min-h-screen flex items-center pt-16 overflow-hidden"
       style={{
-        background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(123,94,167,0.12) 0%, transparent 70%), #ffffff',
+        backgroundColor: '#ffffff',
       }}
     >
       {/* Pontos decorativos de fundo */}
@@ -72,7 +72,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          backgroundImage: 'radial-gradient(circle, rgba(123,94,167,0.07) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(123,94,167,0.05) 1px, transparent 1px)',
           backgroundSize: '32px 32px',
         }}
       />
@@ -103,14 +103,7 @@ export default function Hero() {
               style={{ fontSize: 'clamp(2.4rem, 5.5vw, 3.75rem)', letterSpacing: '-0.02em' }}
             >
               Cuide do seu pet com{' '}
-              <span
-                style={{
-                  background: 'linear-gradient(135deg, #7B5EA7 0%, #5BBFB8 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
+              <span className="text-[#7B5EA7]">
                 inteligência artificial.
               </span>
             </motion.h1>
@@ -135,9 +128,7 @@ export default function Hero() {
               className="flex flex-wrap gap-3"
             >
               <a
-                href="https://github.com/Appa019/PetShop_Scheduler"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/app/login"
                 className="btn-primary"
               >
                 Começar Agora
@@ -179,14 +170,14 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
               className="glass-card p-7 w-full max-w-sm mx-auto relative"
               style={{
-                background: 'linear-gradient(145deg, #ffffff 0%, #FAF8FC 100%)',
+                backgroundColor: '#FAF8FC',
                 boxShadow: '0 16px 48px rgba(123, 94, 167, 0.18), 0 4px 12px rgba(123, 94, 167, 0.08)',
               }}
             >
               {/* Header do card */}
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl"
-                  style={{ background: 'linear-gradient(135deg, rgba(123,94,167,0.12), rgba(91,191,184,0.12))' }}>
+                  style={{ backgroundColor: 'rgba(123,94,167,0.10)' }}>
                   🐕
                 </div>
                 <div>
@@ -207,7 +198,7 @@ export default function Hero() {
                 </div>
                 <div className="h-2 rounded-full" style={{ background: '#EDE8F5' }}>
                   <div className="h-2 rounded-full w-[87%] transition-all"
-                    style={{ background: 'linear-gradient(90deg, #7B5EA7, #5BBFB8)' }} />
+                    style={{ backgroundColor: '#7B5EA7' }} />
                 </div>
               </div>
 

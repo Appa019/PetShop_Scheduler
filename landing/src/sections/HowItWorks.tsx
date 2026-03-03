@@ -11,7 +11,7 @@ const steps = [
   {
     number: '02',
     title: 'IA Analisa a Foto',
-    description: 'Nossa IA baseada em GPT-5.2 identifica a raça automaticamente e gera um perfil completo de saúde.',
+    description: 'Nossa IA de ponta identifica a raça automaticamente e gera um perfil completo de saúde.',
   },
   {
     number: '03',
@@ -44,7 +44,7 @@ export default function HowItWorks() {
         <div className="relative mt-12">
           <div
             className="hidden lg:block absolute top-8 left-[calc(12.5%+20px)] right-[calc(12.5%+20px)] h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, #EDE8F5 20%, #EDE8F5 80%, transparent)' }}
+            style={{ backgroundColor: '#EDE8F5' }}
             aria-hidden="true"
           />
 

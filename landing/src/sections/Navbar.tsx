@@ -69,9 +69,7 @@ export default function Navbar() {
             GitHub
           </a>
           <a
-            href="https://github.com/Appa019/PetShop_Scheduler"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/app/login"
             className="btn-teal text-sm px-4 py-2"
           >
             Acessar App →
@@ -102,9 +100,7 @@ export default function Navbar() {
           ))}
           <div className="mt-3 pt-3 border-t border-[#EDE8F5]">
             <a
-              href="https://github.com/Appa019/PetShop_Scheduler"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/app/login"
               className="btn-teal w-full justify-center"
             >
               Acessar App →

@@ -19,7 +19,7 @@ export default function StepCard({ number, title, description }: StepCardProps) 
 
       {/* Círculo numerado */}
       <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
-        style={{ background: 'linear-gradient(135deg, #7B5EA7 0%, #5A3E7A 100%)' }}>
+        style={{ backgroundColor: '#7B5EA7' }}>
         <span className="text-white font-display font-bold text-sm">{number}</span>
       </div>
 
