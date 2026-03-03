@@ -26,7 +26,7 @@ const MainLayout = () => {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/app">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
