@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #2A2140;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Seleção de texto com cor da marca */
+  ::selection {
+    background-color: rgba(123, 94, 167, 0.18);
+    color: #2A2140;
+  }
+
+  /* Barra de rolagem customizada */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #FAF8FC;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #BFA9E7;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7B5EA7;
+  }
+}
+
+@layer components {
+  /* Card com aparência de vidro fosco e borda lavanda */
+  .glass-card {
+    @apply bg-white border border-[#EDE8F5] rounded-card;
+    box-shadow: 0 4px 24px rgba(123, 94, 167, 0.10), 0 1px 4px rgba(123, 94, 167, 0.07);
+    transition: box-shadow 0.25s ease-out, transform 0.25s ease-out;
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 8px 32px rgba(123, 94, 167, 0.16), 0 2px 8px rgba(123, 94, 167, 0.10);
+  }
+
+  /* Botão primário — gradiente roxo, forma de pílula */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white text-sm;
+    background: linear-gradient(135deg, #7B5EA7 0%, #5A3E7A 100%);
+    box-shadow: 0 4px 16px rgba(123, 94, 167, 0.30);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+
+  .btn-primary:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 24px rgba(123, 94, 167, 0.42);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* Botão outline — borda roxa, fundo transparente */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm;
+    color: #7B5EA7;
+    border: 1.5px solid #7B5EA7;
+    background: transparent;
+    transition: background 0.2s ease-out, transform 0.2s ease-out;
+  }
+
+  .btn-outline:hover {
+    background: rgba(123, 94, 167, 0.05);
+    transform: scale(1.02);
+  }
+
+  /* Botão teal — fundo verde-água */
+  .btn-teal {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white text-sm;
+    background-color: #5BBFB8;
+    box-shadow: 0 4px 16px rgba(91, 191, 184, 0.28);
+    transition: background-color 0.2s ease-out, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+
+  .btn-teal:hover {
+    background-color: #3A9E97;
+    transform: scale(1.03);
+    box-shadow: 0 6px 24px rgba(91, 191, 184, 0.38);
+  }
+
+  /* Badge de seção */
+  .section-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    background-color: rgba(123, 94, 167, 0.08);
+    color: #7B5EA7;
+    border: 1px solid rgba(123, 94, 167, 0.15);
+  }
+}

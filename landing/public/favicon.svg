@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Patinha de pet em roxo -->
+  <!-- Almofada central grande -->
+  <ellipse cx="16" cy="20" rx="8" ry="7" fill="#7B5EA7"/>
+  <!-- Almofadas dos dedos (4 pequenas) -->
+  <circle cx="9"  cy="12" r="3.2" fill="#7B5EA7"/>
+  <circle cx="14" cy="10" r="3"   fill="#7B5EA7"/>
+  <circle cx="19" cy="10" r="3"   fill="#7B5EA7"/>
+  <circle cx="24" cy="12" r="3.2" fill="#7B5EA7"/>
+</svg>

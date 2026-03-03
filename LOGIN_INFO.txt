@@ -1,0 +1,39 @@
+╔══════════════════════════════════════════════════════════════╗
+║                  🐾 8PATAS PETSHOP                           ║
+║              CREDENCIAIS DE ACESSO                           ║
+╚══════════════════════════════════════════════════════════════╝
+
+🔐 USUÁRIO DEMO:
+
+   Username: demo
+   Senha:    senha123
+
+📍 URLs DE ACESSO:
+
+   Frontend:  http://localhost:5173
+   Backend:   http://127.0.0.1:8000
+   API Docs:  http://127.0.0.1:8000/docs
+
+🚀 COMO INICIAR:
+
+   python3 abrir_site.py
+
+   OU
+
+   cd backend && source .venv/bin/activate && uvicorn main:app --reload
+   cd frontend && npm run dev
+
+🎯 PRIMEIRO USO:
+
+   1. Execute: python3 abrir_site.py
+   2. Aguarde o navegador abrir
+   3. Faça login com as credenciais acima
+   4. Cadastre seu primeiro pet com foto!
+   5. Veja a IA identificar a raça automaticamente
+   6. Agende consultas com sugestões inteligentes
+
+═══════════════════════════════════════════════════════════════
+
+💡 DICA: Mantenha este arquivo para referência rápida!
+
+═══════════════════════════════════════════════════════════════

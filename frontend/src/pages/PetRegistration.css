@@ -1,0 +1,430 @@
+.pet-reg-header {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--transition-fast);
+}
+
+.pet-reg-header:hover {
+    transform: translateX(-4px);
+    color: var(--primary-dark);
+}
+
+.pet-reg-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.pet-reg-row .input-group {
+    margin-bottom: 1.5rem;
+}
+
+.photo-upload-area {
+    border: 2px dashed var(--primary-light);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    transition: var(--transition);
+}
+
+.photo-upload-area:hover {
+    background: rgba(123, 94, 167, 0.05);
+    border-color: var(--primary-color);
+}
+
+.photo-upload-area.has-preview {
+    padding: 0;
+    background: transparent;
+    border-style: solid;
+}
+
+.photo-upload-area.empty {
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-prompt {
+    color: var(--primary-dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.ai-breed-badge {
+    display: inline-flex;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: rgba(123, 94, 167, 0.10);
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    border: 1px solid rgba(123, 94, 167, 0.20);
+}
+
+.symptoms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.symptom-tag {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.symptom-tag:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.symptom-tag.selected {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(123, 94, 167, 0.28);
+}
+
+.success-schedule-box {
+    background: rgba(16, 185, 129, 0.1);
+    /* Green tone */
+    border-radius: 16px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 24px;
+    margin-top: 24px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.success-schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #059669;
+    /* Darker green for text */
+    margin-bottom: 16px;
+}
+
+.success-schedule-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.urgent-note {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.schedule-item {
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.schedule-item strong {
+    color: var(--text-main);
+    font-size: 1rem;
+}
+
+.schedule-item .interval {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 6px;
+}
+
+.schedule-item .reason {
+    margin: 6px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ===== AI Loading Screen ===== */
+.ai-loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    gap: 20px;
+    text-align: center;
+    padding: 40px 24px;
+}
+
+.ai-loading-icon {
+    color: var(--primary-color);
+    animation: ai-pulse 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(123, 94, 167, 0.5));
+}
+
+@keyframes ai-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50% { transform: scale(1.25); opacity: 1; }
+}
+
+.ai-loading-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.ai-loading-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 280px;
+    line-height: 1.55;
+}
+
+.ai-progress-track {
+    width: 100%;
+    max-width: 280px;
+    height: 8px;
+    background: rgba(123, 94, 167, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.ai-progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
+    transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px rgba(123, 94, 167, 0.45);
+}
+
+.ai-progress-label {
+    font-size: 0.78rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: -4px 0 0;
+    letter-spacing: 0.4px;
+}
+
+.ai-loading-wait {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    text-align: center;
+    max-width: 260px;
+    line-height: 1.5;
+}
+
+.ai-loading-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.ai-loading-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.ai-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.ai-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+    40% { transform: translateY(-10px); opacity: 1; }
+}
+
+/* ===== Step Indicator ===== */
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--border-color);
+    transition: all 0.35s ease;
+}
+
+.step-dot.active {
+    background: var(--primary-color);
+    width: 28px;
+}
+
+.step-dot.done {
+    background: var(--secondary-color);
+}
+
+/* ===== Breed Confirmation ===== */
+.breed-display {
+    background: linear-gradient(135deg, rgba(123, 94, 167, 0.07), rgba(91, 191, 184, 0.07));
+    border: 1.5px solid rgba(123, 94, 167, 0.15);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.breed-display-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.breed-display-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.breed-srd-badge {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.8px;
+}
+
+.breed-display-mix {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.breed-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    margin: 18px 0 14px;
+}
+
+.breed-divider::before,
+.breed-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.manual-breed-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-outline-sm {
+    background: white;
+    border: 1.5px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.btn-outline-sm:hover:not(:disabled) {
+    background: rgba(123, 94, 167, 0.07);
+}
+
+.btn-outline-sm:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.btn-ghost {
+    background: none;
+    border: 1.5px dashed var(--border-color);
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 14px 20px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-ghost:hover {
+    border-color: var(--primary-light);
+    color: var(--primary-color);
+    background: rgba(123, 94, 167, 0.04);
+}
+
+/* ===== Confirmed Breed Pill (shown in symptoms step) ===== */
+.confirmed-breed-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(123, 94, 167, 0.1);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(123, 94, 167, 0.2);
+}

@@ -1,0 +1,118 @@
+.calendar-widget {
+    padding: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-nav-btn {
+    background: var(--primary-light);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: white;
+    transition: var(--transition);
+}
+
+.calendar-nav-btn:hover {
+    background: var(--primary-color);
+}
+
+.calendar-title {
+    margin: 0;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.weekday-name {
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 5px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    transition: var(--transition);
+    position: relative;
+}
+
+.calendar-day-cell .day-number {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.calendar-day-cell:hover:not(.selected) {
+    background: rgba(123, 94, 167, 0.08);
+    transform: scale(1.05);
+}
+
+.calendar-day-cell.has-appointments {
+    background: rgba(123, 94, 167, 0.06);
+}
+
+.calendar-day-cell.today {
+    background: rgba(123, 94, 167, 0.10);
+    border: 2px solid var(--primary-color);
+}
+
+.calendar-day-cell.today .day-number {
+    font-weight: 700;
+}
+
+.calendar-day-cell.selected {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(123, 94, 167, 0.30);
+}
+
+.appointment-dots {
+    display: flex;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+.appointment-dots .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--primary-color);
+}
+
+.calendar-day-cell.selected .appointment-dots .dot {
+    background: white;
+}
