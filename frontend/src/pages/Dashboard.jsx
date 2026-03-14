@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
+import { supabase } from '../lib/supabase';
 import { Calendar, Clock, LogOut, PawPrint, Filter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { pageVariants, pageTransition, listContainer, listItem } from '../lib/motion';
 import dogBannerUrl from '../assets/dog_banner.png';
 import logoPataUrl from '../assets/logo_circulo.png';
 import CalendarWidget from '../components/CalendarWidget';
@@ -9,7 +12,7 @@ import './Dashboard.css';
 
 const PRIORITY_COLORS = {
     high: { bg: 'rgba(239, 68, 68, 0.07)', border: '#EF4444', text: '#B91C1C', dot: '#EF4444' },
-    medium: { bg: 'rgba(123, 94, 167, 0.07)', border: 'var(--primary-light)', text: 'var(--primary-dark)', dot: 'var(--primary-color)' },
+    medium: { bg: 'rgba(123, 94, 167, 0.07)', border: 'var(--color-accent-light)', text: 'var(--color-accent-hover)', dot: 'var(--color-accent)' },
     low: { bg: 'rgba(16, 185, 129, 0.07)', border: '#10B981', text: '#065F46', dot: '#10B981' },
 };
 
@@ -80,18 +83,22 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userRes = await api.get('/auth/me');
-                setUser(userRes.data);
+                const { data: { user: authUser } } = await supabase.auth.getUser();
+                if (!authUser) {
+                    navigate('/login');
+                    return;
+                }
+                setUser({ name: authUser.user_metadata?.name || '', email: authUser.email });
 
                 const [apptRes, petsRes] = await Promise.all([
-                    api.get('/appointments/'),
-                    api.get('/pets/')
+                    api.get('/appointments'),
+                    api.get('/pets')
                 ]);
                 setAppointments(apptRes.data);
                 setPets(petsRes.data);
             } catch (err) {
                 if (err.response?.status === 401) {
-                    localStorage.removeItem('token');
+                    await supabase.auth.signOut();
                     navigate('/login');
                 }
             }
@@ -99,8 +106,8 @@ const Dashboard = () => {
         fetchData();
     }, [navigate]);
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
         navigate('/login');
     };
 
@@ -122,7 +129,7 @@ const Dashboard = () => {
         .slice(0, 5);
 
     return (
-        <div className="page-container">
+        <motion.div className="page-container" variants={pageVariants} initial="initial" animate="animate" transition={pageTransition}>
             {/* Header */}
             <header className="dashboard-header">
                 <div>
@@ -148,7 +155,7 @@ const Dashboard = () => {
             {/* Pet Filter + Calendar */}
             {pets.length > 1 && (
                 <div className="pet-filter-row">
-                    <Filter size={16} color="var(--primary-color)" />
+                    <Filter size={16} color="var(--color-accent)" />
                     <select
                         value={selectedPetFilter}
                         onChange={(e) => setSelectedPetFilter(e.target.value)}
@@ -174,7 +181,7 @@ const Dashboard = () => {
 
             {/* Consultas do Dia Selecionado */}
             {selectedDate && (
-                <div className="glass-card flat mt-4" style={{ animation: 'fadeIn 0.3s ease-out' }}>
+                <div className="glass-card flat mt-4">
                     <h3 className="section-title">
                         <Calendar size={20} />
                         Consultas de {selectedDate} de {monthNames[currentMonth.getMonth()]}
@@ -186,28 +193,32 @@ const Dashboard = () => {
                             <p className="empty-state-text">Nenhuma consulta agendada para este dia.</p>
                         </div>
                     ) : (
-                        <div className="card-list">
+                        <motion.div className="card-list" variants={listContainer} initial="initial" animate="animate">
                             {selectedDayAppointments.map(app => (
-                                <AppointmentCard key={app.id} app={app} showDate={false} />
+                                <motion.div key={app.id} variants={listItem}>
+                                    <AppointmentCard app={app} showDate={false} />
+                                </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
                     )}
                 </div>
             )}
 
             {/* Próximas Consultas */}
             {!selectedDate && upcomingAppointments.length > 0 && (
-                <div className="glass-card flat mt-4" style={{ animation: 'fadeIn 0.3s ease-out' }}>
+                <div className="glass-card flat mt-4">
                     <h3 className="section-title">
                         <Clock size={20} />
                         Suas Próximas Consultas
                     </h3>
 
-                    <div className="card-list">
+                    <motion.div className="card-list" variants={listContainer} initial="initial" animate="animate">
                         {upcomingAppointments.map(app => (
-                            <AppointmentCard key={app.id} app={app} showDate={true} />
+                            <motion.div key={app.id} variants={listItem}>
+                                <AppointmentCard app={app} showDate={true} />
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             )}
 
@@ -221,7 +232,7 @@ const Dashboard = () => {
                     </button>
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 };
 

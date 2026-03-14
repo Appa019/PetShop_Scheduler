@@ -1,7 +1,7 @@
 .pet-reg-header {
     background: none;
     border: none;
-    color: var(--primary-color);
+    color: var(--color-accent);
     font-weight: 600;
     margin-bottom: 20px;
     font-size: 1rem;
@@ -14,7 +14,7 @@
 
 .pet-reg-header:hover {
     transform: translateX(-4px);
-    color: var(--primary-dark);
+    color: var(--color-accent-hover);
 }
 
 .pet-reg-row {
@@ -28,8 +28,8 @@
 }
 
 .photo-upload-area {
-    border: 2px dashed var(--primary-light);
-    border-radius: 16px;
+    border: 2px dashed var(--color-accent-light);
+    border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -42,8 +42,8 @@
 }
 
 .photo-upload-area:hover {
-    background: rgba(123, 94, 167, 0.05);
-    border-color: var(--primary-color);
+    background: var(--color-accent-tint);
+    border-color: var(--color-accent);
 }
 
 .photo-upload-area.has-preview {
@@ -64,7 +64,7 @@
 }
 
 .upload-prompt {
-    color: var(--primary-dark);
+    color: var(--color-text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
     margin-top: 10px;
@@ -73,13 +73,13 @@
 .ai-breed-badge {
     display: inline-flex;
     padding: 10px 20px;
-    border-radius: 20px;
-    background: rgba(123, 94, 167, 0.10);
-    color: var(--primary-color);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-tint);
+    color: var(--color-accent);
     font-weight: 700;
     font-size: 1.1rem;
     margin-bottom: 10px;
-    border: 1px solid rgba(123, 94, 167, 0.20);
+    border: 1px solid var(--color-accent-border);
 }
 
 .symptoms-grid {
@@ -91,10 +91,10 @@
 
 .symptom-tag {
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: var(--radius-md);
     border: 1px solid rgba(0, 0, 0, 0.1);
     background: white;
-    color: var(--text-main);
+    color: var(--color-text);
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -104,22 +104,22 @@
 }
 
 .symptom-tag:hover {
-    border-color: var(--primary-light);
+    border-color: var(--color-accent-light);
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
 
 .symptom-tag.selected {
-    border-color: var(--primary-color);
-    background: var(--primary-color);
+    border-color: var(--color-accent);
+    background: var(--color-accent);
     color: white;
-    box-shadow: 0 4px 12px rgba(123, 94, 167, 0.28);
+    box-shadow: var(--shadow-md);
 }
 
 .success-schedule-box {
     background: rgba(16, 185, 129, 0.1);
     /* Green tone */
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     border: 1px solid rgba(16, 185, 129, 0.3);
     padding: 24px;
     margin-top: 24px;
@@ -142,7 +142,7 @@
 
 .urgent-note {
     font-weight: 700;
-    color: var(--text-main);
+    color: var(--color-text);
     margin-bottom: 16px;
     display: flex;
     align-items: center;
@@ -158,26 +158,26 @@
 .schedule-item {
     padding: 16px;
     background: white;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .schedule-item strong {
-    color: var(--text-main);
+    color: var(--color-text);
     font-size: 1rem;
 }
 
 .schedule-item .interval {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin-left: 6px;
 }
 
 .schedule-item .reason {
     margin: 6px 0 0 0;
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }
 
 /* ===== AI Loading Screen ===== */
@@ -193,7 +193,7 @@
 }
 
 .ai-loading-icon {
-    color: var(--primary-color);
+    color: var(--color-accent);
     animation: ai-pulse 1.8s ease-in-out infinite;
     filter: drop-shadow(0 0 20px rgba(123, 94, 167, 0.5));
 }
@@ -206,13 +206,13 @@
 .ai-loading-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--text-main);
+    color: var(--color-text);
     margin: 0;
 }
 
 .ai-loading-sub {
     font-size: 0.88rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin: 0;
     max-width: 280px;
     line-height: 1.55;
@@ -222,22 +222,23 @@
     width: 100%;
     max-width: 280px;
     height: 8px;
-    background: rgba(123, 94, 167, 0.15);
+    background: var(--color-accent-border);
     border-radius: 4px;
     overflow: hidden;
 }
 
+/* KEEP gradient — progress bar is exempt */
 .ai-progress-fill {
     height: 100%;
     border-radius: 4px;
-    background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
+    background: linear-gradient(90deg, var(--color-accent-light), var(--color-accent));
     transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 8px rgba(123, 94, 167, 0.45);
 }
 
 .ai-progress-label {
     font-size: 0.78rem;
-    color: var(--primary-color);
+    color: var(--color-accent);
     font-weight: 600;
     margin: -4px 0 0;
     letter-spacing: 0.4px;
@@ -245,7 +246,7 @@
 
 .ai-loading-wait {
     font-size: 0.82rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin: 0;
     text-align: center;
     max-width: 260px;
@@ -261,7 +262,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: var(--color-accent);
     animation: dot-bounce 1.4s ease-in-out infinite;
 }
 
@@ -285,24 +286,24 @@
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background: var(--border-color);
+    background: var(--color-border);
     transition: all 0.35s ease;
 }
 
 .step-dot.active {
-    background: var(--primary-color);
+    background: var(--color-accent);
     width: 28px;
 }
 
 .step-dot.done {
-    background: var(--secondary-color);
+    background: var(--color-secondary);
 }
 
 /* ===== Breed Confirmation ===== */
 .breed-display {
-    background: linear-gradient(135deg, rgba(123, 94, 167, 0.07), rgba(91, 191, 184, 0.07));
-    border: 1.5px solid rgba(123, 94, 167, 0.15);
-    border-radius: 20px;
+    background: var(--color-accent-tint);
+    border: 1.5px solid var(--color-accent-border);
+    border-radius: var(--radius-lg);
     padding: 24px 20px;
     text-align: center;
     margin-bottom: 20px;
@@ -310,7 +311,7 @@
 
 .breed-display-label {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-bottom: 10px;
@@ -320,19 +321,19 @@
 .breed-display-value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary-dark);
+    color: var(--color-accent-hover);
     line-height: 1.3;
     margin: 0;
 }
 
 .breed-srd-badge {
     display: inline-block;
-    background: var(--secondary-color);
+    background: var(--color-secondary);
     color: white;
     font-weight: 700;
     font-size: 0.8rem;
     padding: 4px 14px;
-    border-radius: 20px;
+    border-radius: var(--radius-md);
     margin-bottom: 8px;
     letter-spacing: 0.8px;
 }
@@ -340,7 +341,7 @@
 .breed-display-mix {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--text-main);
+    color: var(--color-text);
     margin: 0;
     line-height: 1.5;
 }
@@ -349,7 +350,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     font-size: 0.82rem;
     margin: 18px 0 14px;
 }
@@ -359,7 +360,7 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--border-color);
+    background: var(--color-border);
 }
 
 .manual-breed-row {
@@ -370,11 +371,11 @@
 
 .btn-outline-sm {
     background: white;
-    border: 1.5px solid var(--primary-color);
-    color: var(--primary-color);
+    border: 1.5px solid var(--color-accent);
+    color: var(--color-accent);
     font-weight: 600;
     padding: 12px 18px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -383,7 +384,7 @@
 }
 
 .btn-outline-sm:hover:not(:disabled) {
-    background: rgba(123, 94, 167, 0.07);
+    background: var(--color-accent-tint);
 }
 
 .btn-outline-sm:disabled {
@@ -391,27 +392,20 @@
     cursor: default;
 }
 
-.btn-ghost {
-    background: none;
-    border: 1.5px dashed var(--border-color);
-    color: var(--text-muted);
-    font-weight: 500;
-    padding: 14px 20px;
-    border-radius: 14px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: var(--transition-fast);
+/* ===== PetRegistration-specific ghost button overrides ===== */
+.pet-reg-ghost {
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
     width: 100%;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 8px;
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
 }
 
-.btn-ghost:hover {
-    border-color: var(--primary-light);
-    color: var(--primary-color);
-    background: rgba(123, 94, 167, 0.04);
+.pet-reg-ghost:hover {
+    border-color: var(--color-accent-light);
+    color: var(--color-accent);
+    background: var(--color-accent-tint);
 }
 
 /* ===== Confirmed Breed Pill (shown in symptoms step) ===== */
@@ -419,12 +413,12 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(123, 94, 167, 0.1);
-    color: var(--primary-dark);
+    background: var(--color-accent-tint);
+    color: var(--color-accent-hover);
     font-weight: 700;
     font-size: 0.85rem;
     padding: 6px 16px;
-    border-radius: 20px;
+    border-radius: var(--radius-md);
     margin-bottom: 16px;
-    border: 1px solid rgba(123, 94, 167, 0.2);
+    border: 1px solid var(--color-accent-border);
 }

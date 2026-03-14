@@ -1,15 +1,16 @@
 import axios from 'axios';
+import { supabase } from '../lib/supabase';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000',
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
-// Configure auth header automatically
+// Interceptor: attach Supabase session token
 api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+    async (config) => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+            config.headers.Authorization = `Bearer ${session.access_token}`;
         }
         return config;
     },
@@ -18,14 +19,12 @@ api.interceptors.request.use(
     }
 );
 
-// Intercept 401s globally to clear token if needed
+// Intercept 401s to sign out
 api.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
         if (error.response?.status === 401) {
-            localStorage.removeItem('token');
-            // Optionally could redirect to login here, but usually React Router handles it 
-            // upon component mount re-checking the token or via an auth context.
+            await supabase.auth.signOut();
         }
         return Promise.reject(error);
     }

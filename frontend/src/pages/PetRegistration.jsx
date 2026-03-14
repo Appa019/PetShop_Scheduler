@@ -4,6 +4,8 @@ import {
     Camera, CheckCircle, Activity, Calendar as CalendarIcon,
     ChevronLeft, AlertCircle, Sparkles, PawPrint, ShieldAlert
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { pageVariants, pageTransition } from '../lib/motion';
 import api from '../api/axios';
 import './PetRegistration.css';
 
@@ -83,7 +85,7 @@ const PetRegistration = () => {
     const [preview, setPreview] = useState(null);
 
     // Navigation state
-    const [step, setStep] = useState('form'); // 'form' | 'loading' | 'breed-confirm' | 'symptoms' | 'schedule'
+    const [step, setStep] = useState('form');
     const [loadingMsg, setLoadingMsg] = useState({ title: '', sub: '' });
 
     // AI / pet data
@@ -111,6 +113,13 @@ const PetRegistration = () => {
         return dashIdx !== -1 ? breed.slice(dashIdx + 3) : '';
     };
 
+    const fileToBase64 = (file) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+
     // ── Handlers ─────────────────────────────────────────────────────────────
     const handleFileChange = (e) => {
         const f = e.target.files?.[0];
@@ -128,18 +137,36 @@ const PetRegistration = () => {
         }
         startLoading('Analisando a foto...', `Identificando raça, porte e características de ${name}`);
 
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('age', age);
-        formData.append('basic_info', basicInfo);
-        if (size) formData.append('size', size);
-        if (weight) formData.append('weight', weight);
-        formData.append('photo', file);
-
         try {
-            const res = await api.post('/pets/', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+            // Convert file to base64
+            const photoDataUrl = await fileToBase64(file);
+            const photoBase64 = photoDataUrl.split(',')[1];
+
+            // Step 1: Create pet in DB
+            const petRes = await api.post('/pets', {
+                name,
+                age,
+                basic_info: basicInfo,
+                size: size || '',
+                weight: weight || '',
+                photo_url: photoDataUrl,
             });
+
+            const createdPetId = petRes.data.id;
+            setPetId(createdPetId);
+
+            // Step 2: Analyze with AI
+            const aiRes = await api.post('/ai-analyze', {
+                pet_id: createdPetId,
+                pet_name: name,
+                pet_age: age,
+                basic_info: basicInfo,
+                pet_size: size || '',
+                pet_weight: weight || '',
+                photo_base64: photoBase64,
+            });
+
+            const aiData = aiRes.data;
 
             let parsedSymptoms = [
                 { name: 'Apatia', description: 'Seu pet parece sem energia ou menos animado que o normal.' },
@@ -149,17 +176,14 @@ const PetRegistration = () => {
                 { name: 'Coceira Excessiva', description: 'Pode indicar alergia ou parasitas.' }
             ];
             try {
-                if (res.data.ai_suggested_symptoms) {
-                    const raw = JSON.parse(res.data.ai_suggested_symptoms);
-                    parsedSymptoms = raw.map(item =>
-                        typeof item === 'string' ? { name: item, description: '' } : item
-                    );
-                }
+                const raw = aiData.suggested_symptoms || [];
+                parsedSymptoms = raw.map(item =>
+                    typeof item === 'string' ? { name: item, description: '' } : item
+                );
             } catch (_) {}
 
-            setPetId(res.data.id);
-            setAiBreed(res.data.ai_breed || '');
-            setConfirmedBreed(res.data.ai_breed || '');
+            setAiBreed(aiData.breed || '');
+            setConfirmedBreed(aiData.breed || '');
             setAvailableSymptoms(parsedSymptoms);
             setStep('breed-confirm');
         } catch (err) {
@@ -185,7 +209,7 @@ const PetRegistration = () => {
             'Analisando características visuais para determinar as raças presentes'
         );
         try {
-            const res = await api.post(`/pets/${petId}/identify-breed-mix`);
+            const res = await api.post('/ai-breed-mix', { pet_id: petId });
             setAiBreed(res.data.breed);
             setConfirmedBreed(res.data.breed);
         } catch (err) {
@@ -202,11 +226,11 @@ const PetRegistration = () => {
             `Montando o plano de saúde de ${name} para os próximos 5 anos`
         );
         const symptomNames = availableSymptoms.slice(0, 8).map(s => s.name);
-        const payload = { symptoms: symptomNames };
+        const payload = { pet_id: petId, symptoms: symptomNames };
         if (confirmedBreed !== aiBreed) payload.breed_override = confirmedBreed;
 
         try {
-            const res = await api.post(`/pets/${petId}/appointment-suggestions`, payload);
+            const res = await api.post('/ai-suggest-appointments', payload);
             setSchedule(res.data);
             setStep('schedule');
         } catch (err) {
@@ -224,7 +248,15 @@ const PetRegistration = () => {
 
     // ── Render ────────────────────────────────────────────────────────────────
     return (
-        <div className="page-container" style={{ paddingBottom: '30px' }}>
+        <motion.div
+            className="page-container"
+            style={{ paddingBottom: '30px' }}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+        >
 
             {/* ── Loading ── */}
             {step === 'loading' && (
@@ -242,9 +274,7 @@ const PetRegistration = () => {
                 </>
             )}
 
-            {/* ══════════════════════════════════════════════════════════════
-                STEP 1 — Formulário
-            ══════════════════════════════════════════════════════════════ */}
+            {/* STEP 1 — Formulário */}
             {step === 'form' && (
                 <>
                     <h2>Cadastrar Pet</h2>
@@ -261,7 +291,7 @@ const PetRegistration = () => {
                                     <img src={preview} alt="Preview" className="photo-preview" />
                                 ) : (
                                     <>
-                                        <Camera size={40} color="var(--primary-light)" />
+                                        <Camera size={40} color="var(--color-accent-light)" />
                                         <span className="upload-prompt">Toque para escolher a foto</span>
                                     </>
                                 )}
@@ -277,34 +307,18 @@ const PetRegistration = () => {
 
                         <div className="input-group mt-4">
                             <label>Nome do Pet</label>
-                            <input
-                                type="text"
-                                className="input-field"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
+                            <input type="text" className="input-field" value={name} onChange={(e) => setName(e.target.value)} required />
                         </div>
 
                         <div className="input-group">
                             <label>Idade (ex: 2 anos)</label>
-                            <input
-                                type="text"
-                                className="input-field"
-                                value={age}
-                                onChange={(e) => setAge(e.target.value)}
-                                required
-                            />
+                            <input type="text" className="input-field" value={age} onChange={(e) => setAge(e.target.value)} required />
                         </div>
 
                         <div className="pet-reg-row">
                             <div className="input-group" style={{ flex: 1 }}>
                                 <label>Porte</label>
-                                <select
-                                    className="input-field"
-                                    value={size}
-                                    onChange={(e) => setSize(e.target.value)}
-                                >
+                                <select className="input-field" value={size} onChange={(e) => setSize(e.target.value)}>
                                     <option value="">Selecione...</option>
                                     <option value="Miniatura">Miniatura (até 3kg)</option>
                                     <option value="Pequeno">Pequeno (3-10kg)</option>
@@ -315,13 +329,7 @@ const PetRegistration = () => {
                             </div>
                             <div className="input-group" style={{ flex: 1 }}>
                                 <label>Peso Aprox. (kg)</label>
-                                <input
-                                    type="text"
-                                    className="input-field"
-                                    placeholder="Ex: 12kg"
-                                    value={weight}
-                                    onChange={(e) => setWeight(e.target.value)}
-                                />
+                                <input type="text" className="input-field" placeholder="Ex: 12kg" value={weight} onChange={(e) => setWeight(e.target.value)} />
                             </div>
                         </div>
 
@@ -345,9 +353,7 @@ const PetRegistration = () => {
                 </>
             )}
 
-            {/* ══════════════════════════════════════════════════════════════
-                STEP 2 — Confirmação de Raça
-            ══════════════════════════════════════════════════════════════ */}
+            {/* STEP 2 — Confirmação de Raça */}
             {step === 'breed-confirm' && (
                 <>
                     <h2>Confirmar Raça</h2>
@@ -357,7 +363,6 @@ const PetRegistration = () => {
                     </p>
 
                     <div className="glass-card mt-4 fade-in">
-                        {/* Breed display */}
                         <div className="breed-display">
                             <p className="breed-display-label">Raça identificada pela IA</p>
 
@@ -373,17 +378,14 @@ const PetRegistration = () => {
                             )}
                         </div>
 
-                        {/* Confirm */}
                         <button onClick={handleConfirmAIBreed} className="btn-primary">
                             <CheckCircle size={20} /> Sim, está correto!
                         </button>
 
-                        {/* Divider */}
                         <div className="breed-divider">
                             <span>Não está correto?</span>
                         </div>
 
-                        {/* Manual breed input */}
                         <div className="manual-breed-row">
                             <input
                                 type="text"
@@ -403,10 +405,9 @@ const PetRegistration = () => {
                             </button>
                         </div>
 
-                        {/* No-breed button */}
                         <button
                             onClick={handleIdentifyMix}
-                            className="btn-ghost"
+                            className="btn-ghost pet-reg-ghost"
                             style={{ marginTop: '10px' }}
                         >
                             <PawPrint size={18} /> Meu pet não tem raça definida
@@ -421,9 +422,7 @@ const PetRegistration = () => {
                 </>
             )}
 
-            {/* ══════════════════════════════════════════════════════════════
-                STEP 3 — Condições de Saúde
-            ══════════════════════════════════════════════════════════════ */}
+            {/* STEP 3 — Condições de Saúde */}
             {step === 'symptoms' && (
                 <>
                     <h2>Saúde de {name}</h2>
@@ -437,7 +436,7 @@ const PetRegistration = () => {
                         <h4 style={{ marginBottom: '4px', marginTop: '4px' }}>
                             Condições a conhecer
                         </h4>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '16px' }}>
+                        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', marginBottom: '16px' }}>
                             Estas são as condições mais frequentes para esta raça. Conhecê-las ajuda na prevenção.
                         </p>
 
@@ -449,7 +448,7 @@ const PetRegistration = () => {
                                     padding: '14px 16px',
                                     background: 'rgba(217, 119, 6, 0.05)',
                                     border: '1px solid rgba(217, 119, 6, 0.18)',
-                                    borderRadius: '12px',
+                                    borderRadius: '8px',
                                     alignItems: 'flex-start'
                                 }}>
                                     <div style={{
@@ -462,11 +461,11 @@ const PetRegistration = () => {
                                         <AlertCircle size={15} color="#D97706" />
                                     </div>
                                     <div>
-                                        <p style={{ margin: 0, fontWeight: '700', fontSize: '0.92rem', color: 'var(--text-main)' }}>
+                                        <p style={{ margin: 0, fontWeight: '700', fontSize: '0.92rem', color: 'var(--color-text)' }}>
                                             {symptom.name}
                                         </p>
                                         {symptom.description && (
-                                            <p style={{ margin: '3px 0 0', fontSize: '0.83rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
+                                            <p style={{ margin: '3px 0 0', fontSize: '0.83rem', color: 'var(--color-text-muted)', lineHeight: '1.5' }}>
                                                 {symptom.description}
                                             </p>
                                         )}
@@ -484,9 +483,7 @@ const PetRegistration = () => {
                 </>
             )}
 
-            {/* ══════════════════════════════════════════════════════════════
-                STEP 4 — Cronograma
-            ══════════════════════════════════════════════════════════════ */}
+            {/* STEP 4 — Cronograma */}
             {step === 'schedule' && schedule && (
                 <>
                     <h2>Cronograma Criado!</h2>
@@ -521,7 +518,7 @@ const PetRegistration = () => {
                     </div>
                 </>
             )}
-        </div>
+        </motion.div>
     );
 };
 

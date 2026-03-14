@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../api/axios';
+import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
+import { pageVariants, pageTransition } from '../lib/motion';
 import logoUrl from '../assets/logo_pata.avif';
 import heroImgUrl from '../assets/pets_nobg.png';
 
@@ -28,34 +30,39 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await api.post('/auth/login', { email, password });
-            localStorage.setItem('token', response.data.access_token);
+            const { error: authError } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+
+            if (authError) {
+                if (authError.message.includes('Email not confirmed')) {
+                    setError('Email não verificado. Verifique sua caixa de entrada e ative sua conta.');
+                } else if (authError.message.includes('Invalid login credentials')) {
+                    setError('Email ou senha incorretos.');
+                } else {
+                    setError(authError.message);
+                }
+                return;
+            }
+
             navigate('/');
         } catch (err) {
-            const status = err.response?.status;
-            const detail = err.response?.data?.detail;
-
-            if (status === 403) {
-                setError('Email não verificado. Verifique sua caixa de entrada e ative sua conta.');
-            } else if (status === 401) {
-                setError('Email ou senha incorretos.');
-            } else {
-                setError(detail || 'Erro ao realizar login. Tente novamente.');
-            }
+            setError('Erro ao realizar login. Tente novamente.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="auth-container">
+        <motion.div className="auth-container" variants={pageVariants} initial="initial" animate="animate" transition={pageTransition}>
             <div className="logo-header">
                 <img
                     src={logoUrl}
                     alt="8Patas Logo"
                     style={{ height: '72px', display: 'inline-block' }}
                 />
-                <p style={{ color: 'rgba(255, 255, 255, 0.75)', marginTop: '6px', fontSize: '0.95rem', letterSpacing: '0.3px' }}>A melhor clínica para seu pet</p>
+                <p style={{ color: 'var(--color-text-secondary)', marginTop: '6px', fontSize: '0.95rem', letterSpacing: '0.3px' }}>A melhor clínica para seu pet</p>
             </div>
 
             <img className="auth-hero-img" src={heroImgUrl} alt="Cachorro e gato 8Patas" />
@@ -91,7 +98,7 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(v => !v)}
-                                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: '2px', display: 'flex', alignItems: 'center' }}
+                                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)', padding: '2px', display: 'flex', alignItems: 'center' }}
                                 aria-label={showPassword ? 'Ocultar senha' : 'Ver senha'}
                             >
                                 <EyeIcon open={showPassword} />
@@ -103,7 +110,7 @@ const Login = () => {
                         <div style={{
                             background: 'var(--color-danger-bg)',
                             border: '1px solid rgba(239,68,68,0.2)',
-                            borderRadius: '10px',
+                            borderRadius: '8px',
                             padding: '10px 14px',
                             display: 'flex',
                             alignItems: 'center',
@@ -112,7 +119,7 @@ const Login = () => {
                             color: 'var(--color-danger-text)',
                             fontWeight: '500',
                         }}>
-                            ⚠️ {error}
+                            {error}
                         </div>
                     )}
 
@@ -122,20 +129,20 @@ const Login = () => {
                 </form>
 
                 <p className="text-center mt-3" style={{ fontSize: '0.875rem', marginBottom: 0 }}>
-                    <Link to="/forgot-password" style={{ color: 'var(--secondary-color)' }}>
+                    <Link to="/forgot-password" style={{ color: 'var(--color-text-secondary)' }}>
                         Esqueci minha senha
                     </Link>
                 </p>
 
                 <p className="text-center mt-3" style={{ fontSize: '0.9rem', marginBottom: 0 }}>
                     Não tem uma conta?{' '}
-                    <Link to="/signup" style={{ color: 'var(--primary-color)', fontWeight: 700 }}>
+                    <Link to="/signup" style={{ color: 'var(--color-accent)', fontWeight: 700 }}>
                         Cadastre-se
                     </Link>
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
-export default Login;
+export { Login };

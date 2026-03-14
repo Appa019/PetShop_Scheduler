@@ -4,21 +4,22 @@
     gap: 12px;
     margin-bottom: 24px;
     font-size: 1.5rem;
-    color: var(--text-main);
+    color: var(--color-text);
 }
 
 .profile-header svg {
-    color: var(--primary-color);
+    color: var(--color-accent);
 }
 
 .user-info-card {
-    background: linear-gradient(135deg, #7B5EA7 0%, #5A3E7A 60%, #4A3268 100%);
+    background: var(--color-accent-tint);
+    border: 1px solid var(--color-accent-border);
+    color: var(--color-text);
+    border-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 40px 24px;
-    color: white;
-    border-radius: var(--border-radius);
     margin-bottom: 24px;
     box-shadow: var(--shadow-md);
 }
@@ -32,23 +33,21 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
-    box-shadow: var(--shadow-lg);
-    border: 4px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid var(--color-accent-border);
 }
 
 .user-name {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--color-text);
 }
 
 .user-email {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-text-secondary);
     margin-top: 8px;
     font-size: 0.95rem;
 }
@@ -56,7 +55,7 @@
 .logout-pill-btn {
     margin-top: 24px;
     padding: 12px 24px;
-    border-radius: 24px;
+    border-radius: var(--radius-md);
     border: none;
     background: white;
     color: #EF4444;
@@ -67,12 +66,12 @@
     transition: var(--transition);
     font-size: 0.95rem;
     font-weight: 600;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
 }
 
 .logout-pill-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     background: #FEF2F2;
 }
 
@@ -82,11 +81,11 @@
     gap: 10px;
     font-size: 1.25rem;
     margin: 32px 0 20px;
-    color: var(--text-main);
+    color: var(--color-text);
 }
 
 .section-label svg {
-    color: var(--primary-color);
+    color: var(--color-accent);
 }
 
 .history-list {
@@ -97,8 +96,8 @@
 
 .history-card {
     padding: 20px;
-    background: var(--surface-color);
-    border-radius: 14px;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     gap: 16px;
@@ -106,7 +105,7 @@
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--color-border);
 }
 
 .history-card:hover {
@@ -119,14 +118,14 @@
     right: -20px;
     bottom: -20px;
     opacity: 0.03;
-    color: var(--text-main);
+    color: var(--color-text);
     transform: rotate(-15deg);
     z-index: 0;
 }
 
 .history-icon-container {
     padding: 14px;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,7 +139,7 @@
 
 .history-icon-container.upcoming {
     background: rgba(123, 94, 167, 0.10);
-    color: var(--primary-color);
+    color: var(--color-accent);
 }
 
 .history-content {
@@ -154,7 +153,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    color: var(--text-main);
+    color: var(--color-text);
 }
 
 .history-status-badge {
@@ -170,13 +169,13 @@
 }
 
 .history-status-badge.upcoming {
-    background: var(--primary-color);
+    background: var(--color-accent);
 }
 
 .history-meta {
     display: flex;
     gap: 16px;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     font-size: 0.9rem;
     margin-bottom: 8px;
 }
@@ -190,10 +189,10 @@
 .history-notes {
     margin: 8px 0 0 0;
     font-size: 0.9rem;
-    color: var(--text-main);
+    color: var(--color-text);
     font-style: italic;
-    background: rgba(123, 94, 167, 0.04);
+    background: var(--color-accent-tint);
     padding: 10px 12px;
     border-radius: 8px;
-    border-left: 3px solid var(--primary-light);
+    border-left: 3px solid var(--color-accent-light);
 }

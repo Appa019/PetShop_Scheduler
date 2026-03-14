@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../api/axios';
+import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
+import { pageVariants, pageTransition } from '../lib/motion';
 import logoUrl from '../assets/logo_pata.avif';
 import heroImgUrl from '../assets/pets_nobg.png';
 
@@ -21,6 +23,7 @@ const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleSignup = async (e) => {
@@ -29,25 +32,63 @@ const Signup = () => {
         setError('');
 
         try {
-            await api.post('/auth/register', { name, email, password });
-            // Redireciona para verificação de email
-            navigate('/verify-email', { state: { email } });
+            const { error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: { name },
+                },
+            });
+
+            if (authError) {
+                setError(authError.message);
+                return;
+            }
+
+            // Supabase sends verification email automatically
+            setSuccess(true);
         } catch (err) {
-            setError(err.response?.data?.detail || 'Erro ao realizar cadastro. Tente novamente.');
+            setError('Erro ao realizar cadastro. Tente novamente.');
         } finally {
             setLoading(false);
         }
     };
 
+    if (success) {
+        return (
+            <motion.div className="auth-container" variants={pageVariants} initial="initial" animate="animate" transition={pageTransition}>
+                <div className="logo-header">
+                    <img src={logoUrl} alt="8Patas Logo" style={{ height: '72px', display: 'inline-block' }} />
+                </div>
+                <div className="auth-card" style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '48px', marginBottom: '12px' }}>📬</div>
+                    <h2 style={{ margin: '0 0 12px', color: 'var(--color-text)', fontSize: '1.3rem' }}>
+                        Verifique seu email
+                    </h2>
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '20px' }}>
+                        Enviamos um link de verificação para<br />
+                        <strong style={{ color: 'var(--color-accent)' }}>{email}</strong>
+                    </p>
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>
+                        Clique no link no email para ativar sua conta e depois faça login.
+                    </p>
+                    <Link to="/login" className="btn-primary mt-4" style={{ display: 'block', textDecoration: 'none', textAlign: 'center' }}>
+                        Ir para Login
+                    </Link>
+                </div>
+            </motion.div>
+        );
+    }
+
     return (
-        <div className="auth-container">
+        <motion.div className="auth-container" variants={pageVariants} initial="initial" animate="animate" transition={pageTransition}>
             <div className="logo-header">
                 <img
                     src={logoUrl}
                     alt="8Patas Logo"
                     style={{ height: '72px', display: 'inline-block' }}
                 />
-                <p style={{ color: 'rgba(255, 255, 255, 0.85)', marginTop: '8px', fontSize: '1.05rem' }}>Crie sua conta gratuitamente</p>
+                <p style={{ color: 'var(--color-text-muted)', marginTop: '8px', fontSize: '1.05rem' }}>Crie sua conta gratuitamente</p>
             </div>
 
             <img className="auth-hero-img" src={heroImgUrl} alt="Cachorro e gato 8Patas" />
@@ -97,7 +138,7 @@ const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(v => !v)}
-                                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: '2px', display: 'flex', alignItems: 'center' }}
+                                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)', padding: '2px', display: 'flex', alignItems: 'center' }}
                                 aria-label={showPassword ? 'Ocultar senha' : 'Ver senha'}
                             >
                                 <EyeIcon open={showPassword} />
@@ -109,7 +150,7 @@ const Signup = () => {
                         <div style={{
                             background: 'var(--color-danger-bg)',
                             border: '1px solid rgba(239,68,68,0.2)',
-                            borderRadius: '10px',
+                            borderRadius: '8px',
                             padding: '10px 14px',
                             display: 'flex',
                             alignItems: 'center',
@@ -118,7 +159,7 @@ const Signup = () => {
                             color: 'var(--color-danger-text)',
                             fontWeight: '500',
                         }}>
-                            ⚠️ {error}
+                            {error}
                         </div>
                     )}
 
@@ -129,13 +170,13 @@ const Signup = () => {
 
                 <p className="text-center mt-3" style={{ fontSize: '0.9rem', marginBottom: 0 }}>
                     Já tem uma conta?{' '}
-                    <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: 700 }}>
+                    <Link to="/login" style={{ color: 'var(--color-accent)', fontWeight: 700 }}>
                         Entrar
                     </Link>
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
-export default Signup;
+export { Signup };

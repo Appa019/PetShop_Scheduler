@@ -11,23 +11,23 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--text-main);
+    color: var(--color-text);
 }
 
 .dashboard-welcome svg {
-    color: var(--primary-color);
+    color: var(--color-accent);
 }
 
 .dashboard-subtitle {
     margin: 4px 0 0 0;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }
 
 .logout-btn {
     background: none;
     border: none;
-    color: var(--primary-light);
+    color: var(--color-accent-light);
     cursor: pointer;
     transition: var(--transition);
     padding: 8px;
@@ -35,9 +35,8 @@
 }
 
 .logout-btn:hover {
-    color: var(--primary-color);
-    background: rgba(123, 94, 167, 0.08);
-    transform: scale(1.1);
+    color: var(--color-accent);
+    background: var(--color-accent-tint);
 }
 
 .dashboard-banner {
@@ -45,7 +44,7 @@
     height: 160px;
     background-size: cover;
     background-position: center;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     margin-bottom: 24px;
     box-shadow: var(--shadow-md);
     position: relative;
@@ -58,6 +57,7 @@
     left: 0;
     right: 0;
     padding: 24px;
+    /* Functional image overlay — EXEMPT from gradient rule */
     background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent);
     color: white;
 }
@@ -82,14 +82,14 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--primary-dark);
+    color: var(--color-accent-hover);
 }
 
 .appointment-card {
-    background: var(--surface-alt, #FAF8FC);
+    background: var(--color-surface);
     padding: 16px;
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
     display: flex;
     align-items: center;
     gap: 16px;
@@ -98,22 +98,22 @@
 
 .appointment-card:hover {
     transform: translateX(4px);
-    background: rgba(123, 94, 167, 0.04);
-    border-color: rgba(123, 94, 167, 0.2);
+    background: var(--color-accent-tint);
+    border-color: var(--color-accent-border);
 }
 
 .appointment-icon {
-    background: var(--primary-color);
+    background: var(--color-accent);
     color: white;
     padding: 12px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     min-width: 52px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(123, 94, 167, 0.22);
+    box-shadow: var(--shadow-sm);
 }
 
 .appointment-date-icon {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: var(--color-accent);
 }
 
 .appointment-date-icon .day {
@@ -135,12 +135,12 @@
 .appointment-time {
     font-weight: 600;
     font-size: 1.05rem;
-    color: var(--text-main);
+    color: var(--color-text);
 }
 
 .appointment-notes {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin-top: 4px;
 }
 
@@ -150,12 +150,12 @@
 }
 
 .empty-state-icon {
-    color: var(--primary-light);
+    color: var(--color-accent-light);
     margin: 0 auto 16px;
     opacity: 0.8;
 }
 
 .empty-state-text {
     margin-bottom: 24px;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }

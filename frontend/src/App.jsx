@@ -1,8 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import VerifyEmail from './pages/VerifyEmail';
-import ForgotPassword from './pages/ForgotPassword';
+import { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
+import { Login } from './pages/Login';
+import { Signup } from './pages/Signup';
+import { VerifyEmail } from './pages/VerifyEmail';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import PetsList from './pages/PetsList';
 import PetRegistration from './pages/PetRegistration';
@@ -11,8 +14,22 @@ import BottomNav from './components/BottomNav';
 import Profile from './pages/Profile';
 
 const ProtectedRoute = () => {
-  const isAuthenticated = !!localStorage.getItem('token');
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  const [session, setSession] = useState(undefined); // undefined = loading
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session: s } }) => {
+      setSession(s);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, s) => setSession(s)
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (session === undefined) return null; // Loading
+  return session ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 const MainLayout = () => {
@@ -32,6 +49,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* Protected Routes without BottomNav */}
         <Route element={<ProtectedRoute />}>

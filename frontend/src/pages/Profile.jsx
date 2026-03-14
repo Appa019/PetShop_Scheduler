@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
+import { supabase } from '../lib/supabase';
 import { User, Mail, Calendar, PawPrint, LogOut, Clock, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { pageVariants, pageTransition, listContainer, listItem } from '../lib/motion';
 import catProfileUrl from '../assets/cat_profile.png';
 import './Profile.css';
 
@@ -14,14 +17,14 @@ const Profile = () => {
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                // Busca usuário e agendamentos em paralelo para maior performance
-                // pet_name já vem incluso em cada agendamento (AppointmentWithPetResponse)
-                const [userRes, apptsRes] = await Promise.all([
-                    api.get('/auth/me'),
-                    api.get('/appointments/'),
-                ]);
-                setUser(userRes.data);
-                // Ordena por data crescente (próximos primeiro)
+                const { data: { user: authUser } } = await supabase.auth.getUser();
+                if (!authUser) {
+                    navigate('/login');
+                    return;
+                }
+                setUser({ name: authUser.user_metadata?.name || '', email: authUser.email });
+
+                const apptsRes = await api.get('/appointments');
                 const sorted = apptsRes.data.sort(
                     (a, b) => new Date(a.date_time) - new Date(b.date_time)
                 );
@@ -29,7 +32,7 @@ const Profile = () => {
             } catch (err) {
                 console.error("Error fetching profile data", err);
                 if (err.response?.status === 401) {
-                    localStorage.removeItem('token');
+                    await supabase.auth.signOut();
                     navigate('/login');
                 }
             } finally {
@@ -40,21 +43,28 @@ const Profile = () => {
         fetchProfileData();
     }, [navigate]);
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
         navigate('/login');
     };
 
     if (loading) {
         return (
             <div className="page-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <Activity size={40} style={{ color: 'var(--primary-color)' }} className="spin" />
+                <Activity size={40} style={{ color: 'var(--color-accent)' }} className="spin" />
             </div>
         );
     }
 
     return (
-        <div className="page-container">
+        <motion.div
+            className="page-container"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+        >
             <h2 className="profile-header">
                 <User size={28} />
                 Meu Perfil
@@ -63,7 +73,7 @@ const Profile = () => {
             {/* User Info Card */}
             <div className="user-info-card" style={{ backgroundImage: `url(${catProfileUrl})` }}>
                 <div className="user-avatar-container">
-                    <User size={45} color="var(--primary-dark)" />
+                    <User size={45} color="var(--color-accent-hover)" />
                 </div>
                 <h3 className="user-name">{user?.name}</h3>
                 <p className="user-email">
@@ -90,7 +100,12 @@ const Profile = () => {
                     </button>
                 </div>
             ) : (
-                <div className="history-list">
+                <motion.div
+                    className="history-list"
+                    variants={listContainer}
+                    initial="hidden"
+                    animate="show"
+                >
                     {appointments.map(app => {
                         const date = new Date(app.date_time);
                         const isPast = date < new Date();
@@ -98,7 +113,12 @@ const Profile = () => {
                         const statusClass = isPast ? 'past' : 'upcoming';
 
                         return (
-                            <div key={app.id} className="history-card" style={{ borderLeft: `4px solid ${isPast ? 'var(--color-success)' : 'var(--primary-color)'}` }}>
+                            <motion.div
+                                key={app.id}
+                                variants={listItem}
+                                className="history-card"
+                                style={{ borderLeft: `4px solid ${isPast ? 'var(--color-success)' : 'var(--color-accent)'}` }}
+                            >
                                 <PawPrint size={100} className="history-bg-icon" />
 
                                 <div className={`history-icon-container ${statusClass}`}>
@@ -125,12 +145,12 @@ const Profile = () => {
                                         <p className="history-notes">"{app.notes}"</p>
                                     )}
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
-                </div>
+                </motion.div>
             )}
-        </div>
+        </motion.div>
     );
 };
 

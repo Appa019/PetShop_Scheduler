@@ -4,15 +4,15 @@
     gap: 12px;
     margin-bottom: 8px;
     font-size: 1.5rem;
-    color: var(--text-main);
+    color: var(--color-text);
 }
 
 .scheduling-header svg {
-    color: var(--primary-color);
+    color: var(--color-accent);
 }
 
 .scheduling-subtitle {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     font-size: 0.95rem;
     margin-bottom: 24px;
 }
@@ -36,13 +36,13 @@
 }
 
 .success-subtext {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin: 0;
 }
 
 .suggestions-card {
-    background: rgba(123, 94, 167, 0.03);
-    border: 1px solid rgba(123, 94, 167, 0.12);
+    background: var(--color-accent-tint);
+    border: 1px solid var(--color-accent-border);
 }
 
 .suggestions-header {
@@ -51,11 +51,11 @@
     gap: 10px;
     font-size: 1.15rem;
     margin-bottom: 16px;
-    color: var(--primary-dark);
+    color: var(--color-accent-hover);
 }
 
 .suggestions-loading {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     text-align: center;
     padding: 20px;
     font-style: italic;
@@ -63,7 +63,7 @@
 
 .suggestions-intro {
     font-size: 0.95rem;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin-bottom: 16px;
 }
 
@@ -76,7 +76,7 @@
 .suggestion-item {
     padding: 16px;
     color: white;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
@@ -104,7 +104,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: var(--text-main);
+    color: var(--color-text);
     font-weight: 500;
     margin-bottom: 8px;
 }

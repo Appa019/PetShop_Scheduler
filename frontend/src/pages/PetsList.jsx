@@ -5,6 +5,8 @@ import {
     PlusCircle, Sparkles, Heart, ShieldAlert, ChevronDown, ChevronUp,
     CheckCircle2, AlertCircle, Droplets, Scissors, Stethoscope, Trash2
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { pageVariants, pageTransition, listContainer, listItem } from '../lib/motion';
 
 // ─── Helper: group care_script by category ──────────────────────────────────
 function parseCareCategories(text) {
@@ -67,7 +69,7 @@ function renderBoldText(text) {
     const parts = text.split(/\*\*(.*?)\*\*/g);
     return parts.map((part, j) =>
         j % 2 === 1
-            ? <strong key={j} style={{ color: 'var(--primary-dark)' }}>{part}</strong>
+            ? <strong key={j} style={{ color: 'var(--color-accent-hover)' }}>{part}</strong>
             : part
     );
 }
@@ -99,7 +101,7 @@ const SectionToggle = ({ icon, label, count, isOpen, onToggle, accentColor, bgCo
             width: '100%',
             background: bgColor,
             border: `1px solid ${borderColor}`,
-            borderRadius: isOpen ? '14px 14px 0 0' : '14px',
+            borderRadius: isOpen ? '8px 8px 0 0' : '8px',
             padding: '13px 16px',
             cursor: 'pointer',
             justifyContent: 'space-between',
@@ -119,7 +121,7 @@ const SectionToggle = ({ icon, label, count, isOpen, onToggle, accentColor, bgCo
                 <span style={{
                     background: accentColor,
                     color: 'white',
-                    borderRadius: '20px',
+                    borderRadius: '8px',
                     padding: '2px 10px',
                     fontSize: '0.73rem',
                     fontWeight: '700',
@@ -146,9 +148,9 @@ const CategoryToggle = ({ category, isOpen, onToggle }) => (
                 alignItems: 'center',
                 gap: '8px',
                 width: '100%',
-                background: isOpen ? 'rgba(123, 94, 167, 0.06)' : 'transparent',
+                background: isOpen ? 'var(--color-accent-tint)' : 'transparent',
                 border: 'none',
-                borderBottom: '1px solid rgba(123,94,167,0.08)',
+                borderBottom: '1px solid var(--color-accent-tint)',
                 padding: '10px 4px',
                 cursor: 'pointer',
                 justifyContent: 'space-between',
@@ -158,21 +160,21 @@ const CategoryToggle = ({ category, isOpen, onToggle }) => (
         >
             <span style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
-                fontWeight: '600', fontSize: '0.88rem', color: 'var(--text-main)'
+                fontWeight: '600', fontSize: '0.88rem', color: 'var(--color-text)'
             }}>
                 <span style={{ fontSize: '1rem' }}>{category.icon}</span>
                 {category.title}
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{
-                    fontSize: '0.72rem', color: 'var(--text-muted)',
+                    fontSize: '0.72rem', color: 'var(--color-text-muted)',
                     fontWeight: '500'
                 }}>
                     {category.items.length} {category.items.length === 1 ? 'item' : 'itens'}
                 </span>
                 {isOpen
-                    ? <ChevronUp size={14} color="var(--text-muted)" />
-                    : <ChevronDown size={14} color="var(--text-muted)" />
+                    ? <ChevronUp size={14} color="var(--color-text-muted)" />
+                    : <ChevronDown size={14} color="var(--color-text-muted)" />
                 }
             </span>
         </button>
@@ -187,18 +189,18 @@ const CategoryToggle = ({ category, isOpen, onToggle }) => (
                         gap: '10px',
                         padding: '7px 0',
                         borderBottom: i < category.items.length - 1
-                            ? '1px solid rgba(123,94,167,0.05)' : 'none',
+                            ? '1px solid var(--color-accent-tint)' : 'none',
                         alignItems: 'flex-start'
                     }}>
                         <CheckCircle2
                             size={14}
-                            color="var(--primary-color)"
+                            color="var(--color-accent)"
                             style={{ flexShrink: 0, marginTop: '3px' }}
                         />
                         <span style={{
                             fontSize: '0.85rem',
                             lineHeight: '1.55',
-                            color: 'var(--text-main)'
+                            color: 'var(--color-text)'
                         }}>
                             {renderBoldText(item)}
                         </span>
@@ -235,7 +237,7 @@ function BreedDiseasesFormatted({ text }) {
                     }}>
                         <p style={{
                             fontSize: '0.86rem',
-                            color: 'var(--text-main)',
+                            color: 'var(--color-text)',
                             lineHeight: '1.75',
                             margin: 0
                         }}>
@@ -259,7 +261,7 @@ const PetsList = () => {
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                const res = await api.get('/pets/');
+                const res = await api.get('/pets');
                 setPets(res.data);
             } catch (err) {
                 console.error("Error fetching pets", err);
@@ -274,7 +276,7 @@ const PetsList = () => {
         if (!window.confirm(`Tem certeza que deseja remover ${petName}? Todas as consultas agendadas também serão removidas.`)) return;
         setDeleting(petId);
         try {
-            await api.delete(`/pets/${petId}`);
+            await api.delete(`/pets?id=${petId}`);
             setPets(prev => prev.filter(p => p.id !== petId));
         } catch (err) {
             alert('Erro ao remover pet: ' + (err.response?.data?.detail || err.message));
@@ -292,7 +294,14 @@ const PetsList = () => {
     const isOpen = (petId, section) => !!(expanded[petId]?.[section]);
 
     return (
-        <div className="page-container">
+        <motion.div
+            className="page-container"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+        >
             <div style={{
                 display: 'flex', justifyContent: 'space-between',
                 alignItems: 'center', marginBottom: '20px'
@@ -302,7 +311,7 @@ const PetsList = () => {
                     onClick={() => navigate('/pets/new')}
                     style={{
                         background: 'none', border: 'none',
-                        color: 'var(--primary-color)', cursor: 'pointer'
+                        color: 'var(--color-accent)', cursor: 'pointer'
                     }}
                 >
                     <PlusCircle size={32} />
@@ -319,7 +328,12 @@ const PetsList = () => {
                     </button>
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <motion.div
+                    style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
+                    variants={listContainer}
+                    initial="initial"
+                    animate="animate"
+                >
                     {pets.map(pet => {
                         const symptoms = parseSymptoms(pet.ai_suggested_symptoms);
                         const careCategories = parseCareCategories(pet.ai_care_script);
@@ -330,9 +344,9 @@ const PetsList = () => {
                         const totalCareItems = careCategories.reduce((sum, c) => sum + c.items.length, 0);
 
                         return (
-                            <div key={pet.id} className="glass-card" style={{
+                            <motion.div key={pet.id} variants={listItem} className="glass-card" style={{
                                 padding: '0', overflow: 'hidden',
-                                borderRadius: '16px',
+                                borderRadius: 'var(--radius-lg)',
                                 boxShadow: '0 4px 20px rgba(0,0,0,0.06)'
                             }}>
 
@@ -360,17 +374,16 @@ const PetsList = () => {
                                                 top: '12px',
                                                 right: '12px',
                                                 background: pet.ai_breed.startsWith('SRD')
-                                                    ? 'var(--secondary-color)'
-                                                    : 'var(--primary-color)',
+                                                    ? 'var(--color-secondary)'
+                                                    : 'var(--color-accent)',
                                                 color: 'white',
                                                 padding: '6px 16px',
-                                                borderRadius: '20px',
+                                                borderRadius: '8px',
                                                 fontSize: '0.78rem',
                                                 fontWeight: '700',
                                                 maxWidth: '200px',
                                                 textAlign: 'center',
                                                 lineHeight: '1.4',
-                                                backdropFilter: 'blur(6px)',
                                                 boxShadow: '0 2px 12px rgba(0,0,0,0.25)'
                                             }}>
                                                 {pet.ai_breed}
@@ -391,13 +404,13 @@ const PetsList = () => {
                                         <div>
                                             <h3 style={{
                                                 margin: 0, fontSize: '1.4rem',
-                                                color: 'var(--text-main)'
+                                                color: 'var(--color-text)'
                                             }}>
                                                 {pet.name}
                                             </h3>
                                             <p style={{
                                                 margin: '4px 0 0',
-                                                color: 'var(--text-muted)',
+                                                color: 'var(--color-text-muted)',
                                                 fontSize: '0.88rem'
                                             }}>
                                                 {pet.age}
@@ -434,11 +447,11 @@ const PetsList = () => {
                                         <div style={{
                                             display: 'inline-block',
                                             background: pet.ai_breed.startsWith('SRD')
-                                                ? 'var(--secondary-color)'
-                                                : 'var(--primary-light)',
+                                                ? 'var(--color-secondary)'
+                                                : 'var(--color-accent-light)',
                                             color: 'white',
                                             padding: '4px 14px',
-                                            borderRadius: '20px',
+                                            borderRadius: '8px',
                                             fontSize: '0.78rem',
                                             fontWeight: '700',
                                             marginBottom: '10px'
@@ -451,7 +464,7 @@ const PetsList = () => {
                                     {pet.basic_info && (
                                         <p style={{
                                             marginTop: '4px', marginBottom: '16px',
-                                            fontSize: '0.88rem', color: 'var(--text-muted)',
+                                            fontSize: '0.88rem', color: 'var(--color-text-muted)',
                                             lineHeight: '1.5'
                                         }}>
                                             {pet.basic_info}
@@ -469,16 +482,16 @@ const PetsList = () => {
                                                 count={totalCareItems}
                                                 isOpen={careOpen}
                                                 onToggle={() => toggle(pet.id, 'care')}
-                                                accentColor="var(--primary-color)"
-                                                bgColor="rgba(123, 94, 167, 0.06)"
-                                                borderColor="rgba(123, 94, 167, 0.18)"
+                                                accentColor="var(--color-accent)"
+                                                bgColor="var(--color-accent-tint)"
+                                                borderColor="var(--color-accent-border)"
                                             />
                                             {careOpen && (
                                                 <div style={{
                                                     background: 'rgba(123, 94, 167, 0.02)',
-                                                    border: '1px solid rgba(123,94,167,0.18)',
+                                                    border: '1px solid var(--color-accent-border)',
                                                     borderTop: 'none',
-                                                    borderRadius: '0 0 14px 14px',
+                                                    borderRadius: '0 0 8px 8px',
                                                     padding: '10px 14px 6px',
                                                     animation: 'fadeIn 0.2s ease-out'
                                                 }}>
@@ -494,7 +507,7 @@ const PetsList = () => {
                                                     ) : (
                                                         <p style={{
                                                             fontSize: '0.85rem',
-                                                            color: 'var(--text-muted)',
+                                                            color: 'var(--color-text-muted)',
                                                             padding: '10px 0'
                                                         }}>
                                                             {pet.ai_care_script}
@@ -525,7 +538,7 @@ const PetsList = () => {
                                                     background: 'rgba(217,119,6,0.02)',
                                                     border: '1px solid rgba(217,119,6,0.2)',
                                                     borderTop: 'none',
-                                                    borderRadius: '0 0 14px 14px',
+                                                    borderRadius: '0 0 8px 8px',
                                                     padding: '12px 14px',
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -566,7 +579,7 @@ const PetsList = () => {
                                                                     <p style={{
                                                                         margin: '4px 0 0',
                                                                         fontSize: '0.82rem',
-                                                                        color: 'var(--text-muted)',
+                                                                        color: 'var(--color-text-muted)',
                                                                         lineHeight: '1.5'
                                                                     }}>
                                                                         {condition.description}
@@ -599,7 +612,7 @@ const PetsList = () => {
                                                     background: 'rgba(239,68,68,0.02)',
                                                     border: '1px solid rgba(239,68,68,0.2)',
                                                     borderTop: 'none',
-                                                    borderRadius: '0 0 14px 14px',
+                                                    borderRadius: '0 0 8px 8px',
                                                     padding: '14px',
                                                     animation: 'fadeIn 0.2s ease-out'
                                                 }}>
@@ -610,12 +623,12 @@ const PetsList = () => {
                                     )}
 
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
-                </div>
+                </motion.div>
             )}
-        </div>
+        </motion.div>
     );
 };
 

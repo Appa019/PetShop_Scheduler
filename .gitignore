@@ -44,6 +44,15 @@ Thumbs.db
 *.key
 *.key(1).pub
 
+# Supabase
+supabase/.temp/
+
+# Claude Code
+.claude/
+.superpowers/
+docs/superpowers/
+
 # IDE
 .idea/
 .vscode/
+.vercel

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { pageVariants, pageTransition, listContainer, listItem } from '../lib/motion';
 import './Scheduling.css';
 
 const Scheduling = () => {
@@ -22,7 +24,7 @@ const Scheduling = () => {
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                const res = await api.get('/pets/');
+                const res = await api.get('/pets');
                 setPets(res.data);
                 if (res.data.length > 0) {
                     setSelectedPet(res.data[0].id.toString());
@@ -43,7 +45,7 @@ const Scheduling = () => {
     const fetchSuggestions = async () => {
         setLoadingSuggestions(true);
         try {
-            const res = await api.get(`/pets/${selectedPet}/appointment-suggestions`);
+            const res = await api.get(`/ai-suggest-appointments?pet_id=${selectedPet}`);
             setSuggestions(res.data);
         } catch (err) {
             console.error("Error fetching suggestions", err);
@@ -76,7 +78,7 @@ const Scheduling = () => {
             // Construct ISO datetime string
             const dateTimeString = new Date(`${date}T${time}:00`).toISOString();
 
-            await api.post('/appointments/', {
+            await api.post('/appointments', {
                 pet_id: parseInt(selectedPet),
                 date_time: dateTimeString,
                 notes: notes
@@ -93,7 +95,14 @@ const Scheduling = () => {
     };
 
     return (
-        <div className="page-container">
+        <motion.div
+            className="page-container"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+        >
             <h2 className="scheduling-header">
                 <Calendar size={28} />
                 Agendar Consulta
@@ -124,10 +133,16 @@ const Scheduling = () => {
                                         Baseado na raça e idade do pet, recomendamos:
                                     </p>
 
-                                    <div className="suggestions-list">
+                                    <motion.div
+                                        className="suggestions-list"
+                                        variants={listContainer}
+                                        initial="hidden"
+                                        animate="show"
+                                    >
                                         {suggestions.appointments?.slice(0, 3).map((apt, idx) => (
-                                            <div
+                                            <motion.div
                                                 key={idx}
+                                                variants={listItem}
                                                 onClick={() => applySuggestion(apt.type, apt.interval_days)}
                                                 className={`suggestion-item-clean ${apt.priority || 'medium'}`}
                                             >
@@ -138,9 +153,9 @@ const Scheduling = () => {
                                                 <span className={`status-badge ${apt.priority || 'medium'}`}>
                                                     {apt.priority === 'high' ? 'Urgente' : apt.priority === 'low' ? 'Eletivo' : 'Importante'}
                                                 </span>
-                                            </div>
+                                            </motion.div>
                                         ))}
-                                    </div>
+                                    </motion.div>
                                 </>
                             )}
                         </div>
@@ -212,7 +227,7 @@ const Scheduling = () => {
                     </form>
                 </>
             )}
-        </div>
+        </motion.div>
     );
 };
 
