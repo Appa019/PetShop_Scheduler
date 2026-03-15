@@ -1,14 +1,9 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { slideConfigs } from './data/slideConfig'
 import { SlideTransition } from './components/SlideTransition'
 import { ProgressBar } from './components/ProgressBar'
 import { SlideNav } from './components/SlideNav'
-import { SceneErrorBoundary } from './three'
-
-const SceneCanvas = lazy(() =>
-  import('./three/SceneCanvas').then(m => ({ default: m.SceneCanvas }))
-)
 import {
   TitleSlide,
   AgendaSlide,
@@ -105,13 +100,6 @@ export function Presentation({ onClose }: PresentationProps) {
       aria-modal="true"
       aria-label="Apresentação 8Patas"
     >
-      {/* 3D Canvas layer — behind slides */}
-      <SceneErrorBoundary>
-        <Suspense fallback={null}>
-          <SceneCanvas currentSlide={current} />
-        </Suspense>
-      </SceneErrorBoundary>
-
       <SlideTransition slideKey={current} transition={config.transition}>
         <SlideComponent />
       </SlideTransition>
