@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Presentation } from 'lucide-react'
 
 const links = [
   { label: 'Funcionalidades', href: '#features' },
@@ -8,8 +8,12 @@ const links = [
   { label: 'Tecnologias', href: '#tech-stack' },
 ]
 
+interface NavbarProps {
+  onOpenPresentation?: () => void
+}
+
 // Navegação principal com sticky top, blur e menu mobile
-export default function Navbar() {
+export default function Navbar({ onOpenPresentation }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -29,7 +33,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/90 backdrop-blur-md border-b border-[#EDE8F5] shadow-sm'
+          ? 'bg-white border-b border-[#EDE8F5] shadow-sm'
           : 'bg-transparent'
       }`}
     >
@@ -40,8 +44,8 @@ export default function Navbar() {
           onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
           className="flex items-center gap-2 font-display font-bold text-xl text-[#7B5EA7] hover:text-[#5A3E7A] transition-colors"
         >
-          <span className="text-2xl" aria-hidden="true">🐾</span>
-          <span>8Patas</span>
+          <img src="/logo_pata.avif" alt="" aria-hidden="true" className="w-7 h-7" />
+          <span className="font-display">8Patas</span>
         </a>
 
         {/* Links desktop */}
@@ -50,7 +54,7 @@ export default function Navbar() {
             <li key={link.href}>
               <button
                 onClick={() => handleNav(link.href)}
-                className="px-3.5 py-2 rounded-lg text-sm font-medium text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-all duration-200"
+                className="px-3.5 py-2 text-sm font-medium text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-all duration-200"
               >
                 {link.label}
               </button>
@@ -60,6 +64,15 @@ export default function Navbar() {
 
         {/* CTA desktop */}
         <div className="hidden md:flex items-center gap-3">
+          {onOpenPresentation && (
+            <button
+              onClick={onOpenPresentation}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#7A7090] hover:text-[#2A2140] transition-colors"
+            >
+              <Presentation size={15} />
+              Apresentação
+            </button>
+          )}
           <a
             href="https://github.com/Appa019/PetShop_Scheduler"
             target="_blank"
@@ -79,7 +92,7 @@ export default function Navbar() {
         {/* Hambúrguer mobile */}
         <button
           onClick={() => setMobileOpen(v => !v)}
-          className="md:hidden p-2 rounded-lg text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-colors"
+          className="md:hidden p-2 text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-colors"
           aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -93,11 +106,20 @@ export default function Navbar() {
             <button
               key={link.href}
               onClick={() => handleNav(link.href)}
-              className="text-left px-3 py-2.5 rounded-lg text-sm font-medium text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-colors"
+              className="text-left px-3 py-2.5 text-sm font-medium text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-colors"
             >
               {link.label}
             </button>
           ))}
+          {onOpenPresentation && (
+            <button
+              onClick={() => { setMobileOpen(false); onOpenPresentation() }}
+              className="text-left px-3 py-2.5 text-sm font-medium text-[#7A7090] hover:text-[#2A2140] hover:bg-[#F5F1FB] transition-colors inline-flex items-center gap-1.5"
+            >
+              <Presentation size={15} />
+              Apresentação
+            </button>
+          )}
           <div className="mt-3 pt-3 border-t border-[#EDE8F5]">
             <a
               href="/app/login"

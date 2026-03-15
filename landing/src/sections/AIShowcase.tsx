@@ -1,4 +1,5 @@
-import { Brain, Eye, CalendarCheck, CheckCircle2 } from 'lucide-react'
+import { Brain, Eye, CalendarCheck, CheckCircle2, Search, BarChart3, Heart, AlertTriangle, CalendarDays, Stethoscope, Salad } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import SectionHeading from '../components/SectionHeading'
 
@@ -26,11 +27,10 @@ const capabilities = [
   },
 ]
 
-// Linha de resultado da IA com ícone e texto
-function AIResultRow({ icon, text, highlight }: { icon: string; text: string; highlight?: string }) {
+function AIResultRow({ Icon, text, highlight }: { Icon: LucideIcon; text: string; highlight?: string }) {
   return (
     <div className="flex items-start gap-3 py-2.5 border-b border-[#EDE8F5] last:border-0">
-      <span className="text-base flex-shrink-0 w-5 text-center">{icon}</span>
+      <Icon size={16} className="flex-shrink-0 mt-0.5 text-[#7A7090]" strokeWidth={1.75} />
       <p className="text-sm text-[#7A7090] leading-relaxed">
         {text}
         {highlight && (
@@ -41,31 +41,30 @@ function AIResultRow({ icon, text, highlight }: { icon: string; text: string; hi
   )
 }
 
-// Seção "Inteligência Artificial" — duas colunas com capacidades e card de exemplo
 export default function AIShowcase() {
   return (
-    <section className="py-24 lg:py-32" style={{ background: '#FAF8FC' }}>
+    <section className="py-24 lg:py-32" style={{ background: '#FAF8F5' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex justify-center">
             <SectionHeading
               badge="Inteligência Artificial"
               title="Três camadas de IA trabalhando pelo seu pet."
-              subtitle="Nossa IA de ponta analisa, interpreta e planeja — para que você só precise cuidar."
+              subtitle="Nossa IA de ponta analisa, interpreta e planeja - para que você só precise cuidar."
             />
           </div>
         </ScrollReveal>
 
         <div className="mt-14 grid lg:grid-cols-2 gap-12 items-center">
 
-          {/* Coluna esquerda — capacidades */}
+          {/* Left - capabilities */}
           <div className="flex flex-col gap-5">
             {capabilities.map((cap, i) => (
               <ScrollReveal key={cap.title} delay={i * 0.1}>
-                <div className="flex items-start gap-4 p-5 rounded-2xl border border-[#EDE8F5] bg-white hover:-translate-y-0.5 transition-transform duration-300"
+                <div className="flex items-start gap-4 p-5 border border-[#EDE8F5] bg-white hover:-translate-y-0.5 transition-transform duration-300"
                   style={{ boxShadow: '0 2px 12px rgba(123,94,167,0.06)' }}>
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    className="w-10 h-10 flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: cap.bg }}
                   >
                     <cap.icon size={18} style={{ color: cap.color }} strokeWidth={1.75} />
@@ -79,7 +78,7 @@ export default function AIShowcase() {
             ))}
           </div>
 
-          {/* Coluna direita — card de output da IA */}
+          {/* Right - AI output card */}
           <ScrollReveal delay={0.25}>
             <div
               className="glass-card p-7 relative overflow-hidden"
@@ -88,16 +87,9 @@ export default function AIShowcase() {
                 boxShadow: '0 8px 40px rgba(123, 94, 167, 0.14), 0 2px 8px rgba(123, 94, 167, 0.08)',
               }}
             >
-              {/* Blur decorativo */}
-              <div
-                className="absolute -top-10 -right-10 w-40 h-40 rounded-full pointer-events-none"
-                style={{ backgroundColor: 'rgba(123,94,167,0.05)' }}
-                aria-hidden="true"
-              />
-
-              {/* Header do card */}
+              {/* Card header */}
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+                <div className="w-8 h-8 flex items-center justify-center"
                   style={{ backgroundColor: '#7B5EA7' }}>
                   <Brain size={14} className="text-white" />
                 </div>
@@ -111,21 +103,21 @@ export default function AIShowcase() {
                 </div>
               </div>
 
-              {/* Resultados */}
+              {/* Results */}
               <div className="flex flex-col">
-                <AIResultRow icon="🔍" text="Raça identificada:" highlight="Golden Retriever" />
-                <AIResultRow icon="📊" text="Confiança da análise:" highlight="94,2%" />
-                <AIResultRow icon="❤️" text="Expectativa de vida:" highlight="10 a 12 anos" />
-                <AIResultRow icon="⚠️" text="Predisposições detectadas:" highlight="Displasia coxofemoral, Obesidade" />
-                <AIResultRow icon="📅" text="Próxima vacina:" highlight="V10 em 15 dias" />
-                <AIResultRow icon="🦷" text="Próxima limpeza dental:" highlight="20 de janeiro" />
-                <AIResultRow icon="🥗" text="Dieta recomendada:" highlight="Ração premium — 380g/dia" />
+                <AIResultRow Icon={Search} text="Raça identificada:" highlight="Golden Retriever" />
+                <AIResultRow Icon={BarChart3} text="Confiança da análise:" highlight="94,2%" />
+                <AIResultRow Icon={Heart} text="Expectativa de vida:" highlight="10 a 12 anos" />
+                <AIResultRow Icon={AlertTriangle} text="Predisposições detectadas:" highlight="Displasia coxofemoral, Obesidade" />
+                <AIResultRow Icon={CalendarDays} text="Próxima vacina:" highlight="V10 em 15 dias" />
+                <AIResultRow Icon={Stethoscope} text="Próxima limpeza dental:" highlight="20 de janeiro" />
+                <AIResultRow Icon={Salad} text="Dieta recomendada:" highlight="Ração premium - 380g/dia" />
               </div>
 
-              {/* Rodapé do card */}
+              {/* Footer */}
               <div className="mt-4 pt-4 border-t border-[#EDE8F5] flex items-center justify-between">
                 <p className="text-[11px] text-[#7A7090]">Cronograma de 5 anos gerado</p>
-                <span className="text-[10px] px-2 py-1 rounded-full font-semibold"
+                <span className="text-[10px] px-2 py-1 font-semibold"
                   style={{ background: 'rgba(123, 94, 167, 0.10)', color: '#7B5EA7' }}>
                   57 eventos programados
                 </span>

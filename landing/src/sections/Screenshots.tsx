@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Lock, LayoutDashboard, PawPrint, Camera, CalendarDays, Pill } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import SectionHeading from '../components/SectionHeading'
 
@@ -6,52 +8,52 @@ interface ScreenshotItem {
   file: string
   title: string
   description: string
-  gradient: string
-  emoji: string
+  solidColor: string
+  Icon: LucideIcon
 }
 
 const screenshots: ScreenshotItem[] = [
   {
     file: 'login.png',
     title: 'Tela de Login',
-    description: 'Acesso seguro com autenticação JWT',
-    gradient: 'linear-gradient(135deg, #7B5EA7 0%, #5A3E7A 100%)',
-    emoji: '🔐',
+    description: 'Acesso seguro com autenticação Supabase',
+    solidColor: '#7B5EA7',
+    Icon: Lock,
   },
   {
     file: 'dashboard.png',
     title: 'Dashboard Principal',
     description: 'Visão geral de todos os pets cadastrados',
-    gradient: 'linear-gradient(135deg, #5BBFB8 0%, #3A9E97 100%)',
-    emoji: '📊',
+    solidColor: '#5BBFB8',
+    Icon: LayoutDashboard,
   },
   {
     file: 'pets-list.png',
     title: 'Lista de Pets',
     description: 'Todos os animais com status de saúde',
-    gradient: 'linear-gradient(135deg, #A68FCC 0%, #7B5EA7 100%)',
-    emoji: '🐾',
+    solidColor: '#A68FCC',
+    Icon: PawPrint,
   },
   {
     file: 'pet-registration.png',
     title: 'Cadastro com IA',
     description: 'Identificação automática da raça por foto',
-    gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-    emoji: '📸',
+    solidColor: '#F59E0B',
+    Icon: Camera,
   },
   {
     file: 'scheduling.png',
     title: 'Agendamento',
     description: 'Cronograma inteligente de 5 anos',
-    gradient: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
-    emoji: '📅',
+    solidColor: '#EF4444',
+    Icon: CalendarDays,
   },
   {
     file: 'profile.png',
     title: 'Perfil do Pet',
     description: 'Histórico completo e recomendações de saúde',
-    gradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-    emoji: '💊',
+    solidColor: '#10B981',
+    Icon: Pill,
   },
 ]
 
@@ -60,14 +62,13 @@ interface ScreenshotCardProps {
   index: number
 }
 
-// Card de screenshot com fallback em gradiente colorido
 function ScreenshotCard({ item, index }: ScreenshotCardProps) {
   const [imgError, setImgError] = useState(false)
 
   return (
     <div className="glass-card overflow-hidden group hover:-translate-y-1 transition-transform duration-300 cursor-default">
-      {/* Área da imagem */}
-      <div className="relative h-44 overflow-hidden rounded-t-[20px]">
+      {/* Image area - sharp corners */}
+      <div className="relative h-44 overflow-hidden">
         {!imgError ? (
           <img
             src={`/screenshots/${item.file}`}
@@ -77,24 +78,24 @@ function ScreenshotCard({ item, index }: ScreenshotCardProps) {
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          /* Placeholder quando a imagem ainda não existe */
+          /* Placeholder - solid color, no gradient */
           <div
             className="w-full h-full flex flex-col items-center justify-center gap-3"
-            style={{ background: item.gradient }}
+            style={{ background: item.solidColor }}
           >
-            <span className="text-4xl" aria-hidden="true">{item.emoji}</span>
+            <item.Icon size={36} className="text-white/90" strokeWidth={1.5} />
             <span className="text-white/80 text-xs font-medium font-mono">screenshot em breve</span>
           </div>
         )}
 
-        {/* Overlay de índice no canto */}
-        <div className="absolute top-3 left-3 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-          style={{ background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(4px)' }}>
+        {/* Index overlay - sharp corners, no blur */}
+        <div className="absolute top-3 left-3 w-6 h-6 flex items-center justify-center text-[10px] font-bold text-white"
+          style={{ background: 'rgba(0,0,0,0.45)' }}>
           {index + 1}
         </div>
       </div>
 
-      {/* Legenda */}
+      {/* Caption */}
       <div className="p-4">
         <p className="font-display font-semibold text-[#2A2140] text-sm leading-snug">{item.title}</p>
         <p className="text-xs text-[#7A7090] mt-0.5">{item.description}</p>
@@ -103,10 +104,9 @@ function ScreenshotCard({ item, index }: ScreenshotCardProps) {
   )
 }
 
-// Seção de screenshots da interface
 export default function Screenshots() {
   return (
-    <section id="screenshots" className="py-24 lg:py-32 bg-white">
+    <section id="screenshots" className="py-24 lg:py-32" style={{ background: '#FAF8F5' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex justify-center">

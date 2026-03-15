@@ -1,4 +1,4 @@
-import { ArrowRight, Github } from 'lucide-react'
+import { ArrowRight, Github, PawPrint } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 
 // Seção de chamada para ação com fundo roxo sólido e botão teal
@@ -18,9 +18,9 @@ export default function CTA() {
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <ScrollReveal>
           <div className="flex flex-col items-center gap-7">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+            <span className="inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wider"
               style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.9)', border: '1px solid rgba(255,255,255,0.20)' }}>
-              🐾 Comece hoje mesmo
+              <PawPrint size={12} /> Comece hoje mesmo
             </span>
 
             <h2
@@ -31,7 +31,7 @@ export default function CTA() {
             </h2>
 
             <p className="text-lg leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.75)' }}>
-              Cadastre seu animal agora e deixe a IA gerar o plano de saúde completo —
+              Cadastre seu animal agora e deixe a IA gerar o plano de saúde completo  -
               gratuito, sem necessidade de cartão de crédito.
             </p>
 
@@ -47,7 +47,7 @@ export default function CTA() {
                 href="https://github.com/Appa019/PetShop_Scheduler"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-semibold text-base transition-all duration-200 hover:scale-102"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold text-base transition-all duration-200 hover:scale-102"
                 style={{
                   color: 'rgba(255,255,255,0.85)',
                   border: '1.5px solid rgba(255,255,255,0.30)',

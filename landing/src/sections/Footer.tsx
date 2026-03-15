@@ -15,7 +15,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="border-t border-[#EDE8F5]" style={{ background: '#FAF8FC' }}>
+    <footer className="border-t border-[#EDE8F5]" style={{ background: '#FAF8F5' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
 
@@ -26,8 +26,8 @@ export default function Footer() {
               onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
               className="flex items-center gap-2 font-display font-bold text-lg text-[#7B5EA7] hover:text-[#5A3E7A] transition-colors w-fit"
             >
-              <span className="text-xl" aria-hidden="true">🐾</span>
-              <span>8Patas</span>
+              <img src="/logo_pata.avif" alt="" aria-hidden="true" className="w-6 h-6" />
+              <span className="font-display">8Patas</span>
             </a>
             <p className="text-xs text-[#7A7090] pl-8">Gestão veterinária com inteligência artificial</p>
           </div>

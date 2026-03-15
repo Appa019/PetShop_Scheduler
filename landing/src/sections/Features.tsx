@@ -42,7 +42,7 @@ const features = [
   {
     icon: CalendarClock,
     title: 'Agendamento Inteligente',
-    description: 'Agende consultas e procedimentos com base no plano de saúde do pet — nunca mais perca um cuidado essencial.',
+    description: 'Agende consultas e procedimentos com base no plano de saúde do pet - nunca mais perca um cuidado essencial.',
     iconBg: 'rgba(123, 94, 167, 0.10)',
     iconColor: '#5A3E7A',
   },
@@ -51,14 +51,14 @@ const features = [
 // Seção de funcionalidades em grade 3×2
 export default function Features() {
   return (
-    <section id="features" className="py-24 lg:py-32" style={{ background: '#FAF8FC' }}>
+    <section id="features" className="py-24 lg:py-32" style={{ background: '#FAF8F5' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex justify-center">
             <SectionHeading
               badge="Funcionalidades"
               title="Tudo que seu pet precisa, em um só lugar."
-              subtitle="Da identificação por foto ao plano de saúde completo — nossa plataforma cobre cada etapa do bem-estar do seu animal."
+              subtitle="Da identificação por foto ao plano de saúde completo - nossa plataforma cobre cada etapa do bem-estar do seu animal."
             />
           </div>
         </ScrollReveal>

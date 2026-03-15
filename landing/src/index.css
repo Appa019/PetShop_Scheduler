@@ -16,52 +16,50 @@
   }
 
   body {
-    background-color: #ffffff;
+    background-color: #FAF8F5;
     color: #2A2140;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     line-height: 1.6;
   }
 
-  /* Seleção de texto com cor da marca */
   ::selection {
     background-color: rgba(123, 94, 167, 0.18);
     color: #2A2140;
   }
 
-  /* Barra de rolagem customizada */
   ::-webkit-scrollbar {
     width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #FAF8FC;
+    background: #FAF8F5;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #BFA9E7;
+    background: #C4BFD0;
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #7B5EA7;
+    background: #7A7090;
   }
 }
 
 @layer components {
-  /* Card com aparência de vidro fosco e borda lavanda */
+  /* Card - solid surface, sharp corners */
   .glass-card {
-    @apply bg-white border border-[#EDE8F5] rounded-card;
-    box-shadow: 0 4px 24px rgba(123, 94, 167, 0.10), 0 1px 4px rgba(123, 94, 167, 0.07);
+    @apply bg-white border border-[#EDE8F5];
+    box-shadow: 0 4px 24px rgba(42, 33, 64, 0.07), 0 1px 4px rgba(42, 33, 64, 0.04);
     transition: box-shadow 0.25s ease-out, transform 0.25s ease-out;
   }
 
   .glass-card:hover {
-    box-shadow: 0 8px 32px rgba(123, 94, 167, 0.16), 0 2px 8px rgba(123, 94, 167, 0.10);
+    box-shadow: 0 8px 32px rgba(42, 33, 64, 0.10), 0 2px 8px rgba(42, 33, 64, 0.06);
   }
 
-  /* Botão primário — roxo sólido, forma de pílula */
+  /* Primary button - sharp corners */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white text-sm;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white text-sm;
     background-color: #7B5EA7;
     box-shadow: 0 4px 16px rgba(123, 94, 167, 0.30);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
@@ -76,9 +74,9 @@
     transform: scale(0.98);
   }
 
-  /* Botão outline — borda roxa, fundo transparente */
+  /* Outline button - sharp corners */
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-sm;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-sm;
     color: #7B5EA7;
     border: 1.5px solid #7B5EA7;
     background: transparent;
@@ -90,9 +88,9 @@
     transform: scale(1.02);
   }
 
-  /* Botão teal — fundo verde-água */
+  /* Teal button - sharp corners */
   .btn-teal {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white text-sm;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white text-sm;
     background-color: #5BBFB8;
     box-shadow: 0 4px 16px rgba(91, 191, 184, 0.28);
     transition: background-color 0.2s ease-out, transform 0.2s ease-out, box-shadow 0.2s ease-out;
@@ -104,11 +102,80 @@
     box-shadow: 0 6px 24px rgba(91, 191, 184, 0.38);
   }
 
-  /* Badge de seção */
+  /* Section badge - sharp corners */
   .section-badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    @apply inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold uppercase tracking-wider;
     background-color: rgba(123, 94, 167, 0.08);
     color: #7B5EA7;
     border: 1px solid rgba(123, 94, 167, 0.15);
   }
+
+  /* Presentation slide container */
+  .slide-container {
+    @apply relative w-full min-h-screen flex items-center justify-center overflow-hidden;
+  }
+
+  /* 3D perspective container */
+  .perspective-container {
+    perspective: 1200px;
+  }
+
+  /* 3D tilt card */
+  .tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+  }
+
+  /* Lean Canvas grid layout */
+  .lean-canvas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .lean-canvas-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Timeline connector - solid lavanda line */
+  .timeline-connector {
+    @apply absolute;
+    left: 1.5rem;
+    top: 3.5rem;
+    bottom: -0.5rem;
+    width: 2px;
+    background: #7B5EA7;
+    opacity: 0.15;
+  }
+
+  /* Cinematographic clip-path animations */
+  .clip-reveal {
+    animation: clipReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .mask-up {
+    animation: maskUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .line-draw {
+    animation: lineDraw 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+@keyframes clipReveal {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes maskUp {
+  0% { clip-path: inset(100% 0 0 0); }
+  100% { clip-path: inset(0); }
+}
+
+@keyframes lineDraw {
+  0% { width: 0; }
+  100% { width: 100%; }
 }

@@ -9,14 +9,14 @@ const stacks = [
     title: 'Frontend',
     color: '#7B5EA7',
     bg: 'rgba(123, 94, 167, 0.08)',
-    techs: ['React 19', 'Vite 7', 'React Router 7', 'Lucide Icons', 'Axios', 'TypeScript'],
+    techs: ['React 19', 'Vite 7', 'React Router 7', 'Framer Motion', 'Lucide Icons'],
   },
   {
     icon: Server,
     title: 'Backend',
     color: '#5BBFB8',
     bg: 'rgba(91, 191, 184, 0.08)',
-    techs: ['Python 3.11+', 'FastAPI', 'SQLAlchemy', 'SQLite', 'JWT / bcrypt', 'aiosmtplib'],
+    techs: ['Supabase Edge Functions', 'Deno / TypeScript', 'PostgreSQL', 'RLS Policies', 'Gmail SMTP'],
   },
   {
     icon: Cpu,
@@ -30,21 +30,21 @@ const stacks = [
     title: 'Infraestrutura',
     color: '#10B981',
     bg: 'rgba(16, 185, 129, 0.08)',
-    techs: ['Oracle Cloud VPS', 'Ubuntu 22.04', 'Nginx', 'Systemd', 'Let\'s Encrypt'],
+    techs: ['Supabase', 'Vercel', 'pg_cron', 'Supabase Auth'],
   },
 ]
 
 // Seção de stack tecnológica em grade 2×2
 export default function TechStack() {
   return (
-    <section id="tech-stack" className="py-24 lg:py-32" style={{ background: '#FAF8FC' }}>
+    <section id="tech-stack" className="py-24 lg:py-32" style={{ background: '#FAF8F5' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex justify-center">
             <SectionHeading
               badge="Tecnologias"
               title="Stack moderna para um produto robusto."
-              subtitle="Cada tecnologia escolhida com propósito — da IA de ponta à infraestrutura confiável na nuvem."
+              subtitle="Cada tecnologia escolhida com propósito - da IA de ponta à infraestrutura confiável na nuvem."
             />
           </div>
         </ScrollReveal>
@@ -56,7 +56,7 @@ export default function TechStack() {
                 {/* Cabeçalho da categoria */}
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                    className="w-9 h-9 flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: stack.bg }}
                   >
                     <stack.icon size={16} style={{ color: stack.color }} strokeWidth={1.75} />

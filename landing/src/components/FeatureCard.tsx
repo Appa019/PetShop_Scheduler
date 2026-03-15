@@ -20,7 +20,7 @@ export default function FeatureCard({
     <div className="glass-card p-6 flex flex-col gap-4 group cursor-default hover:-translate-y-0.5 transition-transform duration-300">
       {/* Ícone em círculo colorido */}
       <div
-        className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+        className="w-11 h-11 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
         style={{ backgroundColor: iconBg }}
       >
         <Icon size={20} style={{ color: iconColor }} strokeWidth={1.75} />

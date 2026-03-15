@@ -35,7 +35,7 @@ export default function HowItWorks() {
             <SectionHeading
               badge="Como Funciona"
               title="4 passos simples para começar."
-              subtitle="Do cadastro ao plano de saúde completo — é rápido, intuitivo e personalizado para o seu pet."
+              subtitle="Do cadastro ao plano de saúde completo - é rápido, intuitivo e personalizado para o seu pet."
             />
           </div>
         </ScrollReveal>

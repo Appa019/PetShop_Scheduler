@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Github, Sparkles, Brain, CalendarCheck } from 'lucide-react'
+import { ArrowRight, Github, Sparkles, Brain, CalendarCheck, Syringe, Droplets, Stethoscope, Presentation } from 'lucide-react'
 
 const stats = [
   { value: '4 Passos', label: 'com IA' },
@@ -7,7 +7,7 @@ const stats = [
   { value: 'IA de Ponta', label: 'integrada' },
 ]
 
-// Cartão flutuante que simula output da IA
+// Floating AI card - static position, animated entrance
 function FloatingAICard() {
   return (
     <motion.div
@@ -15,10 +15,9 @@ function FloatingAICard() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.5, ease: 'easeOut' }}
       className="glass-card p-5 w-72 absolute -bottom-6 -left-8 hidden lg:block"
-      style={{ animation: 'float 6s ease-in-out infinite' }}
     >
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+        <div className="w-8 h-8 flex items-center justify-center flex-shrink-0"
           style={{ backgroundColor: '#7B5EA7' }}>
           <Brain size={14} className="text-white" />
         </div>
@@ -26,10 +25,10 @@ function FloatingAICard() {
           <p className="text-xs font-semibold text-[#2A2140]">IA identificou a raça</p>
           <p className="text-xs text-[#7A7090]">Golden Retriever · 94% de confiança</p>
           <div className="flex gap-1.5 mt-1">
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F5F1FB] text-[#7B5EA7] font-medium">
+            <span className="text-[10px] px-2 py-0.5 bg-[#F5F1FB] text-[#7B5EA7] font-medium">
               Displasia
             </span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#EDFAFA] text-[#3A9E97] font-medium">
+            <span className="text-[10px] px-2 py-0.5 bg-[#EDFAFA] text-[#3A9E97] font-medium">
               10–12 anos
             </span>
           </div>
@@ -46,7 +45,6 @@ function ScheduleCard() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.7, ease: 'easeOut' }}
       className="glass-card p-4 w-56 absolute -top-4 -right-6 hidden lg:block"
-      style={{ animationDelay: '1.5s', animation: 'float 6s ease-in-out 1s infinite' }}
     >
       <div className="flex items-center gap-2 mb-2">
         <CalendarCheck size={14} style={{ color: '#5BBFB8' }} />
@@ -58,31 +56,33 @@ function ScheduleCard() {
   )
 }
 
-// Seção hero da landing — gradiente roxo, badge, H1 e CTAs
-export default function Hero() {
+interface HeroProps {
+  onOpenPresentation?: () => void
+}
+
+export default function Hero({ onOpenPresentation }: HeroProps) {
   return (
     <section
       className="relative min-h-screen flex items-center pt-16 overflow-hidden"
       style={{
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FAF8F5',
       }}
     >
-      {/* Pontos decorativos de fundo */}
+      {/* Dot pattern */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          backgroundImage: 'radial-gradient(circle, rgba(123,94,167,0.05) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
+          backgroundImage: 'radial-gradient(circle, rgba(123,94,167,0.03) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
         }}
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          {/* Conteúdo esquerdo */}
+          {/* Left content */}
           <div className="flex flex-col gap-8">
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -94,7 +94,6 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Título */}
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -108,7 +107,6 @@ export default function Hero() {
               </span>
             </motion.h1>
 
-            {/* Subtítulo */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -117,10 +115,9 @@ export default function Hero() {
             >
               Identifique a raça do seu pet por foto, gere um perfil completo de saúde
               e receba um cronograma personalizado de vacinação e cuidados para os
-              próximos 5 anos — tudo em 4 passos simples.
+              próximos 5 anos - tudo em 4 passos simples.
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -143,9 +140,17 @@ export default function Hero() {
                 <Github size={16} />
                 Ver no GitHub
               </a>
+              {onOpenPresentation && (
+                <button
+                  onClick={onOpenPresentation}
+                  className="btn-outline"
+                >
+                  <Presentation size={16} />
+                  Ver Apresentação
+                </button>
+              )}
             </motion.div>
 
-            {/* Stats */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -161,59 +166,59 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Ilustração direita — mockup com cards flutuantes */}
+          {/* Right - mockup with floating cards */}
           <div className="relative flex items-center justify-center h-[420px] lg:h-[480px]">
-            {/* Card central */}
+            {/* Central card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
               className="glass-card p-7 w-full max-w-sm mx-auto relative"
               style={{
-                backgroundColor: '#FAF8FC',
-                boxShadow: '0 16px 48px rgba(123, 94, 167, 0.18), 0 4px 12px rgba(123, 94, 167, 0.08)',
+                backgroundColor: '#FAF8F5',
+                boxShadow: '0 16px 48px rgba(42, 33, 64, 0.10), 0 4px 12px rgba(42, 33, 64, 0.05)',
               }}
             >
-              {/* Header do card */}
+              {/* Card header */}
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl"
+                <div className="w-12 h-12 flex items-center justify-center"
                   style={{ backgroundColor: 'rgba(123,94,167,0.10)' }}>
-                  🐕
+                  <img src="/logo_pata.avif" alt="" className="w-7 h-7" />
                 </div>
                 <div>
                   <p className="font-display font-bold text-[#2A2140] text-sm">Bolinha</p>
                   <p className="text-xs text-[#7A7090]">Golden Retriever · 3 anos</p>
                 </div>
-                <span className="ml-auto text-[10px] px-2 py-1 rounded-full font-semibold"
+                <span className="ml-auto text-[10px] px-2 py-1 font-semibold"
                   style={{ background: 'rgba(16,185,129,0.10)', color: '#10B981' }}>
                   Saudável
                 </span>
               </div>
 
-              {/* Barra de progresso de saúde */}
+              {/* Health progress bar */}
               <div className="flex flex-col gap-1.5 mb-4">
                 <div className="flex justify-between text-xs">
                   <span className="text-[#7A7090]">Score de saúde</span>
                   <span className="font-semibold text-[#2A2140]">87/100</span>
                 </div>
-                <div className="h-2 rounded-full" style={{ background: '#EDE8F5' }}>
-                  <div className="h-2 rounded-full w-[87%] transition-all"
+                <div className="h-2" style={{ background: '#EDE8F5' }}>
+                  <div className="h-2 w-[87%] transition-all"
                     style={{ backgroundColor: '#7B5EA7' }} />
                 </div>
               </div>
 
-              {/* Lista de cuidados */}
+              {/* Care items */}
               <div className="flex flex-col gap-2">
                 {[
-                  { icon: '💉', text: 'Vacina V10 em 15 dias', tag: 'Urgente', tagColor: '#EF4444' },
-                  { icon: '🛁', text: 'Banho agendado — 5/jan', tag: 'Agendado', tagColor: '#5BBFB8' },
-                  { icon: '🦷', text: 'Limpeza dental — 20/jan', tag: 'Próximo', tagColor: '#F59E0B' },
+                  { Icon: Syringe, text: 'Vacina V10 em 15 dias', tag: 'Urgente', tagColor: '#EF4444' },
+                  { Icon: Droplets, text: 'Banho agendado - 5/jan', tag: 'Agendado', tagColor: '#5BBFB8' },
+                  { Icon: Stethoscope, text: 'Limpeza dental - 20/jan', tag: 'Próximo', tagColor: '#F59E0B' },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5 p-2.5 rounded-xl"
-                    style={{ background: '#FAF8FC' }}>
-                    <span className="text-base">{item.icon}</span>
+                  <div key={i} className="flex items-center gap-2.5 p-2.5"
+                    style={{ background: '#FAF8F5' }}>
+                    <item.Icon size={16} style={{ color: item.tagColor }} strokeWidth={1.75} />
                     <p className="text-xs text-[#2A2140] flex-1">{item.text}</p>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
+                    <span className="text-[10px] px-1.5 py-0.5 font-medium"
                       style={{ background: `${item.tagColor}18`, color: item.tagColor }}>
                       {item.tag}
                     </span>
@@ -222,7 +227,6 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Cards flutuantes */}
             <FloatingAICard />
             <ScheduleCard />
           </div>
