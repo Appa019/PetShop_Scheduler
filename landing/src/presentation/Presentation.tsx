@@ -23,6 +23,7 @@ import {
   DesignThinkingSlide,
   AIUsageSlide,
   ReferencesSlide,
+  CTASlide,
 } from './slides'
 
 const slideComponents = [
@@ -44,6 +45,7 @@ const slideComponents = [
   DesignThinkingSlide,
   AIUsageSlide,
   ReferencesSlide,
+  CTASlide,
 ]
 
 interface PresentationProps {

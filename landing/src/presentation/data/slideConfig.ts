@@ -27,6 +27,7 @@ export const slideConfigs: SlideConfig[] = [
   { title: 'Design Thinking', transition: 'fade-up', bg: 'creme' },
   { title: 'IA', transition: 'scale-in', bg: 'creme' },
   { title: 'Referências', transition: 'fade-up', bg: 'lavanda' },
+  { title: 'Acesse o App', transition: 'scale-in', bg: 'lavanda' },
 ]
 
 export const bgColors: Record<SlideBg, string> = {
