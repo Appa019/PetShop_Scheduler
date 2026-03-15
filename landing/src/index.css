@@ -151,6 +151,82 @@
     opacity: 0.15;
   }
 
+  /* Split-screen slide layout */
+  .slide-split {
+    @apply flex flex-col lg:flex-row items-center gap-12 w-full;
+  }
+
+  .slide-split-content {
+    @apply flex-1 flex flex-col gap-6;
+  }
+
+  .slide-split-visual {
+    @apply flex-1 flex items-center justify-center;
+  }
+
+  /* Big number display */
+  .big-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  /* Medium display number */
+  .display-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Hero title - extra large */
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #2A2140;
+  }
+
+  /* Animated underline accent */
+  .accent-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .accent-underline::after {
+    display: none;
+  }
+
+  /* Pricing card highlighted state */
+  .pricing-highlight {
+    position: relative;
+    border: 2px solid #7B5EA7;
+  }
+
+  .pricing-highlight::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: rgba(123, 94, 167, 0.03);
+    pointer-events: none;
+  }
+
+  /* Flow step with connector */
+  .flow-step {
+    @apply relative flex items-center gap-3;
+  }
+
+  .flow-connector {
+    @apply w-8 h-[2px];
+    background: linear-gradient(90deg, #7B5EA7, #5BBFB8);
+    opacity: 0.3;
+  }
+
   /* Cinematographic clip-path animations */
   .clip-reveal {
     animation: clipReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;

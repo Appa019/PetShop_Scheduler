@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { TransitionType } from '../data/slideConfig'
 
-const springConfig = { type: 'spring' as const, stiffness: 120, damping: 25 }
+const springConfig = { type: 'spring' as const, stiffness: 200, damping: 28 }
 
 const variants: Record<TransitionType, {
   initial: Record<string, number | string>

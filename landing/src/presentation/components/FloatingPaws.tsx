@@ -1,10 +1,14 @@
-// Decorative paw prints - static, very low opacity background texture
+import { motion } from 'framer-motion'
+
+// Decorative paw prints - animated with subtle float
 export function FloatingPaws() {
   const paws = [
-    { top: '8%', left: '5%', size: 28, rotate: -15 },
-    { top: '72%', right: '8%', size: 24, rotate: 20 },
-    { top: '25%', right: '12%', size: 20, rotate: -30 },
-    { bottom: '15%', left: '10%', size: 22, rotate: 10 },
+    { top: '8%', left: '5%', size: 28, rotate: -15, delay: 0 },
+    { top: '72%', right: '8%', size: 24, rotate: 20, delay: 0.3 },
+    { top: '25%', right: '12%', size: 20, rotate: -30, delay: 0.6 },
+    { bottom: '15%', left: '10%', size: 22, rotate: 10, delay: 0.9 },
+    { top: '50%', left: '3%', size: 16, rotate: -45, delay: 1.2 },
+    { bottom: '35%', right: '5%', size: 18, rotate: 35, delay: 0.5 },
   ]
 
   return (
@@ -13,7 +17,7 @@ export function FloatingPaws() {
       aria-hidden="true"
     >
       {paws.map((paw, i) => (
-        <div
+        <motion.div
           key={i}
           className="absolute"
           style={{
@@ -21,7 +25,15 @@ export function FloatingPaws() {
             left: paw.left,
             right: paw.right,
             bottom: paw.bottom,
-            opacity: 0.03 + (i * 0.005),
+          }}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 0.03 + (i * 0.004),
+            y: [0, -6, 0],
+          }}
+          transition={{
+            opacity: { duration: 0.8, delay: paw.delay },
+            y: { duration: 8 + i * 2, repeat: Infinity, ease: 'easeInOut', delay: paw.delay },
           }}
         >
           <img
@@ -34,7 +46,7 @@ export function FloatingPaws() {
               filter: 'grayscale(0.5)',
             }}
           />
-        </div>
+        </motion.div>
       ))}
     </div>
   )

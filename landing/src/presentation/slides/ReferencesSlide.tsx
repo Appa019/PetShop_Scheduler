@@ -1,116 +1,115 @@
 import { motion } from 'framer-motion'
-import { BookOpen, ExternalLink, GraduationCap } from 'lucide-react'
+import { ExternalLink, GraduationCap, Heart } from 'lucide-react'
 import { SlideWrapper } from '../components/SlideWrapper'
+import { AccentShapes } from '../components/AccentShapes'
 
 const references = [
-  'ABINPET - Associação Brasileira da Indústria de Produtos para Animais de Estimação (2024)',
-  'IPB - Instituto Pet Brasil: Censo Pet 2024',
-  'RIES, Eric. The Lean Startup. Crown Business, 2011',
-  'OSTERWALDER, A. Business Model Generation. Wiley, 2010',
-  'BROWN, Tim. Design Thinking. Harvard Business Review, 2008',
-  'OpenAI API Documentation - Responses API (2025)',
-  'Supabase Documentation - Edge Functions & Auth (2025)',
+  'ABINPET – Panorama do mercado pet brasileiro',
+  'Instituto Pet Brasil – Dados sobre população de pets no Brasil',
+  'Mintel Group Ltd – Brazil pets grooming & healthcare market report (2023)',
+  'TGM Research – Pet care survey – Brazil',
+  'OECD – Oslo Manual (2018)',
+  'Oito Patas Pet Shop – Site oficial da empresa',
 ]
 
 const fgvReferences = [
   'DORNELAS, J. Empreendedorismo Corporativo. Rio de Janeiro: Elsevier, 2015',
   'HASHIMOTO, M. Espírito Empreendedor nas Organizações. São Paulo: Saraiva, 2013',
-  'PINCHOT, G. Intrapreneuring: Why You Don\'t Have to Leave the Corporation to Become an Entrepreneur. Berrett-Koehler, 2000',
+  'PINCHOT, G. Intrapreneuring. Berrett-Koehler, 2000',
   'BLANK, S. The Four Steps to the Epiphany. K&S Ranch, 2013',
-  'CHRISTENSEN, C. The Innovator\'s Dilemma. Harvard Business Review Press, 2016',
-  'Material eClass FGV - Módulos de Intraempreendedorismo e Inovação Corporativa (2025)',
+  'CHRISTENSEN, C. The Innovator\'s Dilemma. HBR Press, 2016',
+  'Material eClass FGV - Módulos de Intraempreendedorismo (2025)',
 ]
 
 export function ReferencesSlide() {
   return (
-    <SlideWrapper bg="lavanda">
-      <div className="flex flex-col items-center gap-8 w-full">
-        <motion.span
-          className="section-badge"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <BookOpen size={12} />
-          Referências
-        </motion.span>
+    <SlideWrapper bg="lavanda" maxWidth="wide" padding="compact">
+      <AccentShapes variant="circles" />
 
-        <motion.h2
-          className="font-display font-bold text-3xl md:text-4xl text-[#2A2140] text-center"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+      <div className="flex flex-col items-center gap-6 w-full">
+        {/* Thank you hero section */}
+        <motion.div
+          className="text-center mb-2"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          Referências
-        </motion.h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl">
-          {/* General references */}
           <motion.div
-            className="glass-card p-5"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-[#7B5EA7]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           >
+            <Heart size={28} className="text-white" />
+          </motion.div>
+
+          <h2
+            className="font-display font-bold text-[#7B5EA7]"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
+          >
+            Obrigado!
+          </h2>
+          <p className="text-sm text-[#7A7090] mt-1">
+            8Patas  - Plataforma Veterinária com Inteligência Artificial
+          </p>
+        </motion.div>
+
+        {/* References in two columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl">
+          <motion.div
+            className="p-4 bg-white border border-[#EDE8F5]"
+            style={{ boxShadow: '0 2px 10px rgba(42,33,64,0.04)' }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
             <div className="flex items-center gap-2 mb-3">
-              <ExternalLink size={14} className="text-[#7B5EA7]" />
-              <h3 className="font-semibold text-sm text-[#2A2140]">Bibliografia & Dados</h3>
+              <ExternalLink size={13} className="text-[#7B5EA7]" />
+              <h3 className="font-semibold text-xs uppercase tracking-wider text-[#7B5EA7]">Bibliografia & Dados</h3>
             </div>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-1.5">
               {references.map((ref, i) => (
                 <motion.li
                   key={i}
-                  className="flex items-start gap-2 text-xs text-[#7A7090]"
+                  className="flex items-start gap-2 text-[11px] text-[#7A7090] leading-relaxed"
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + i * 0.04 }}
+                  transition={{ delay: 0.4 + i * 0.03 }}
                 >
-                  <span className="w-1 h-1 rounded-full bg-[#7B5EA7] mt-1.5 flex-shrink-0" />
+                  <span className="w-1 h-1 bg-[#7B5EA7] flex-shrink-0 mt-1.5" style={{ opacity: 0.4 }} />
                   {ref}
                 </motion.li>
               ))}
             </ul>
           </motion.div>
 
-          {/* FGV / discipline references */}
           <motion.div
-            className="glass-card p-5"
+            className="p-4 bg-white border border-[#EDE8F5]"
+            style={{ boxShadow: '0 2px 10px rgba(42,33,64,0.04)' }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
+            transition={{ delay: 0.35 }}
           >
             <div className="flex items-center gap-2 mb-3">
-              <GraduationCap size={14} className="text-[#5BBFB8]" />
-              <h3 className="font-semibold text-sm text-[#2A2140]">Referências da Disciplina (FGV)</h3>
+              <GraduationCap size={13} className="text-[#5BBFB8]" />
+              <h3 className="font-semibold text-xs uppercase tracking-wider text-[#5BBFB8]">Referências FGV</h3>
             </div>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-1.5">
               {fgvReferences.map((ref, i) => (
                 <motion.li
                   key={i}
-                  className="flex items-start gap-2 text-xs text-[#7A7090]"
+                  className="flex items-start gap-2 text-[11px] text-[#7A7090] leading-relaxed"
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.35 + i * 0.04 }}
+                  transition={{ delay: 0.45 + i * 0.03 }}
                 >
-                  <span className="w-1 h-1 rounded-full bg-[#5BBFB8] mt-1.5 flex-shrink-0" />
+                  <span className="w-1 h-1 bg-[#5BBFB8] flex-shrink-0 mt-1.5" style={{ opacity: 0.4 }} />
                   {ref}
                 </motion.li>
               ))}
             </ul>
           </motion.div>
         </div>
-
-        {/* Thank you */}
-        <motion.div
-          className="text-center mt-4"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.7 }}
-        >
-          <h3 className="font-display font-bold text-2xl text-[#7B5EA7] mb-2">Obrigado!</h3>
-          <p className="text-sm text-[#7A7090]">
-            8Patas - Plataforma Veterinária com Inteligência Artificial
-          </p>
-        </motion.div>
       </div>
     </SlideWrapper>
   )
