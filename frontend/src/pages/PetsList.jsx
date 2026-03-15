@@ -262,7 +262,7 @@ const PetsList = () => {
         const fetchPets = async () => {
             try {
                 const res = await api.get('/pets');
-                setPets(res.data);
+                setPets(Array.isArray(res.data) ? res.data : []);
             } catch (err) {
                 console.error("Error fetching pets", err);
             } finally {

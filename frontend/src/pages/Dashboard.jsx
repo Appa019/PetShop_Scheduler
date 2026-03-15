@@ -94,8 +94,8 @@ const Dashboard = () => {
                     api.get('/appointments'),
                     api.get('/pets')
                 ]);
-                setAppointments(apptRes.data);
-                setPets(petsRes.data);
+                setAppointments(Array.isArray(apptRes.data) ? apptRes.data : []);
+                setPets(Array.isArray(petsRes.data) ? petsRes.data : []);
             } catch (err) {
                 if (err.response?.status === 401) {
                     await supabase.auth.signOut();

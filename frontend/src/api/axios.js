@@ -12,6 +12,7 @@ api.interceptors.request.use(
         if (session?.access_token) {
             config.headers.Authorization = `Bearer ${session.access_token}`;
         }
+        config.headers.apikey = import.meta.env.VITE_SUPABASE_ANON_KEY;
         return config;
     },
     (error) => {

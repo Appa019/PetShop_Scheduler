@@ -25,9 +25,10 @@ const Scheduling = () => {
         const fetchPets = async () => {
             try {
                 const res = await api.get('/pets');
-                setPets(res.data);
-                if (res.data.length > 0) {
-                    setSelectedPet(res.data[0].id.toString());
+                const petsData = Array.isArray(res.data) ? res.data : [];
+                setPets(petsData);
+                if (petsData.length > 0) {
+                    setSelectedPet(petsData[0].id.toString());
                 }
             } catch (err) {
                 console.error("Error fetching pets", err);

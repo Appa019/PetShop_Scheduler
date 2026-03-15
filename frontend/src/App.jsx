@@ -15,20 +15,25 @@ import Profile from './pages/Profile';
 
 const ProtectedRoute = () => {
   const [session, setSession] = useState(undefined); // undefined = loading
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
+      setReady(true);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, s) => setSession(s)
+      (_event, s) => {
+        setSession(s);
+        setReady(true);
+      }
     );
 
     return () => subscription.unsubscribe();
   }, []);
 
-  if (session === undefined) return null; // Loading
+  if (!ready) return null;
   return session ? <Outlet /> : <Navigate to="/login" replace />;
 };
 

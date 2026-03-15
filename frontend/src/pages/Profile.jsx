@@ -25,7 +25,8 @@ const Profile = () => {
                 setUser({ name: authUser.user_metadata?.name || '', email: authUser.email });
 
                 const apptsRes = await api.get('/appointments');
-                const sorted = apptsRes.data.sort(
+                const apptsData = Array.isArray(apptsRes.data) ? apptsRes.data : [];
+                const sorted = apptsData.sort(
                     (a, b) => new Date(a.date_time) - new Date(b.date_time)
                 );
                 setAppointments(sorted);
