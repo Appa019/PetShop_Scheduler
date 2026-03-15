@@ -189,17 +189,18 @@ Deno.serve(async (req: Request) => {
       let suggestions;
       if (openaiResponse.ok) {
         const data = await openaiResponse.json();
-        suggestions = JSON.parse(data.output?.[0]?.content?.[0]?.text || data.output_text || "{}");
+        const rawText = data.output?.find((o: any) => o.type === "message")?.content?.[0]?.text
+          || data.output?.[0]?.content?.[0]?.text
+          || data.output_text
+          || "{}";
+        suggestions = JSON.parse(rawText);
       } else {
-        console.error("OpenAI error:", await openaiResponse.text());
-        suggestions = {
-          appointments: [
-            { type: "Consulta Clínica Geral", interval_days: 30, priority: "high", reason: "Avaliação de saúde geral" },
-            { type: "Vacina V10 — Reforço Anual", interval_days: 365, priority: "high", reason: "Protocolo vacinal anual" },
-            { type: "Hemograma + Bioquímica Sérica", interval_days: 180, priority: "medium", reason: "Exames de rotina semestral" },
-          ],
-          next_recommended: "Consulta Clínica Geral",
-        };
+        const errBody = await openaiResponse.text();
+        console.error("OpenAI error:", openaiResponse.status, errBody);
+        return new Response(
+          JSON.stringify({ detail: `OpenAI API error: ${openaiResponse.status}`, debug: errBody }),
+          { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
       }
 
       // Create appointments in DB

@@ -136,21 +136,18 @@ Deno.serve(async (req: Request) => {
     let aiResult;
     if (openaiResponse.ok) {
       const data = await openaiResponse.json();
-      aiResult = JSON.parse(data.output?.[0]?.content?.[0]?.text || data.output_text || "{}");
+      const rawText = data.output?.find((o: any) => o.type === "message")?.content?.[0]?.text
+        || data.output?.[0]?.content?.[0]?.text
+        || data.output_text
+        || "{}";
+      aiResult = JSON.parse(rawText);
     } else {
-      console.error("OpenAI error:", await openaiResponse.text());
-      aiResult = {
-        breed: "Desconhecida",
-        care_script: "- Forneça uma dieta balanceada.\n- Garanta exercícios diários.\n- Visite o veterinário regularmente.",
-        suggested_symptoms: [
-          { name: "Apatia", description: "Seu pet parece sem energia ou menos animado que o normal." },
-          { name: "Vômito", description: "Episódios frequentes merecem atenção veterinária." },
-          { name: "Diarreia", description: "Fezes líquidas por mais de 24h exigem avaliação." },
-          { name: "Falta de Apetite", description: "Recusa em comer por mais de 1 dia pode indicar dor ou doença." },
-          { name: "Coceira Excessiva", description: "Pode indicar alergia ou parasitas." },
-        ],
-        breed_diseases: "Não foi possível gerar o perfil de doenças. Consulte um veterinário.",
-      };
+      const errBody = await openaiResponse.text();
+      console.error("OpenAI error:", openaiResponse.status, errBody);
+      return new Response(
+        JSON.stringify({ detail: `OpenAI API error: ${openaiResponse.status}`, debug: errBody }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // If pet_id provided, update the pet record with AI results

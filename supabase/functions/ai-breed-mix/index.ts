@@ -116,8 +116,19 @@ Deno.serve(async (req: Request) => {
     let breed = "SRD - Raça não determinada";
     if (openaiResponse.ok) {
       const data = await openaiResponse.json();
-      const result = JSON.parse(data.output?.[0]?.content?.[0]?.text || data.output_text || "{}");
+      const rawText = data.output?.find((o: any) => o.type === "message")?.content?.[0]?.text
+        || data.output?.[0]?.content?.[0]?.text
+        || data.output_text
+        || "{}";
+      const result = JSON.parse(rawText);
       breed = result.breed || breed;
+    } else {
+      const errBody = await openaiResponse.text();
+      console.error("OpenAI error:", openaiResponse.status, errBody);
+      return new Response(
+        JSON.stringify({ detail: `OpenAI API error: ${openaiResponse.status}`, debug: errBody }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Update pet breed in DB
