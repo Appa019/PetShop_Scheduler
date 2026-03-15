@@ -1,310 +1,105 @@
-# 🐾 8Patas Petshop - Sistema de Gestão Veterinária
-**Link do Site:https://projetointraempreendedorismo.vercel.app/**
+# 8Patas — Plataforma Veterinaria com IA
 
-Sistema completo de gestão para petshops com funcionalidades de agendamento inteligente, cadastro de pets com análise de IA e sugestões personalizadas de cuidados.
+Plataforma de gestao veterinaria com cadastro inteligente de pets, analise de raca por IA (visao computacional), cronograma preventivo personalizado e agendamento de consultas.
 
-## 🎨 Design
+**Site:** https://projetointraempreendedorismo.vercel.app
+**App:** https://projetointraempreendedorismo.vercel.app/app/login
 
-- Paleta de cores baseada no logo roxo (#8B5CF6)
-- Interface clean e profissional
-- Transições suaves e animações modernas
-- Design responsivo (mobile-first)
+## Stack
 
-## 🚀 Funcionalidades
+| Camada | Tecnologia |
+|--------|-----------|
+| Frontend | React 19 + Vite + React Router v7 + Framer Motion |
+| Landing | React + Vite + Tailwind CSS + Framer Motion |
+| Backend | Supabase Edge Functions (Deno/TypeScript) |
+| Banco | Supabase PostgreSQL com RLS |
+| Auth | Supabase Auth (email verification) |
+| IA | OpenAI gpt-5.2 (Responses API — visao + texto) |
+| Deploy | Vercel (monorepo landing + app) + Supabase |
 
-- ✅ **Sistema de Login Simplificado**: Username e senha (sem necessidade de email)
-- 🐕 **Cadastro de Pets com IA**: Upload de foto e análise automática da raça
-- 📅 **Agendamento Inteligente**: Sugestões de consultas baseadas na raça e idade do pet
-- 🎯 **Dashboard**: Visualização de próximos agendamentos
-- 💜 **Design Profissional**: Paleta de cores consistente e transições suaves
+## Funcionalidades
 
-## 🛠️ Tecnologias
+- **Cadastro de Pets com IA**: upload de foto, identificacao automatica de raca via visao computacional
+- **Cuidados Personalizados**: script de cuidados gerado por IA baseado em raca, idade e porte
+- **Perfil de Saude**: condicoes geneticas e doencas comuns da raca identificada
+- **Cronograma Preventivo**: plano de 5 anos de consultas, vacinas e exames gerado por IA
+- **Agendamento**: sistema completo com sugestoes inteligentes e calendario
+- **Dashboard**: visao geral com calendario e proximas consultas
+- **Apresentacao**: landing page com slides interativos do projeto
 
-### Backend
-- FastAPI (Python)
-- SQLite
-- OpenAI API (GPT-4o Vision)
-- JWT Authentication
+## Estrutura
 
-### Frontend
-- React 19
-- Vite
-- Axios
-- Lucide React (ícones)
-- React Router
+```
+├── frontend/          # App React (SPA em /app/)
+│   ├── src/pages/     # Login, Dashboard, PetsList, Scheduling, Profile
+│   ├── src/api/       # Axios com interceptor Supabase
+│   └── src/lib/       # Supabase client, motion variants
+├── landing/           # Landing page + apresentacao (raiz /)
+│   └── src/presentation/  # 19 slides interativos
+├── supabase/
+│   ├── functions/     # Edge Functions (Deno/TS)
+│   │   ├── pets/              # CRUD de pets
+│   │   ├── appointments/      # CRUD de agendamentos
+│   │   ├── ai-analyze/        # Analise de foto + raca + cuidados
+│   │   ├── ai-breed-mix/      # Identificacao de mistura de racas (SRD)
+│   │   ├── ai-suggest-appointments/  # Cronograma preventivo por IA
+│   │   ├── send-reminders/    # Lembretes por email
+│   │   └── _shared/          # CORS, auth, email, supabase client
+│   └── migrations/    # SQL schema + triggers
+├── scripts/           # Utilitarios (create-demo-user.js)
+├── build.sh           # Build monorepo (landing + app)
+└── vercel.json        # Config de deploy
+```
 
-## 📦 Instalação
-
-### Início Rápido (Linux/Mac)
+## Desenvolvimento
 
 ```bash
-# Clone ou baixe o projeto
-cd projeto_intraempreendedorismo
+# Frontend
+cd frontend && pnpm install && pnpm dev
 
-# Execute o script de setup
-./setup.sh
+# Landing
+cd landing && pnpm install && pnpm dev
 
-# Configure suas chaves API
-nano backend/.env
+# Deploy Edge Functions
+npx supabase functions deploy <nome> --project-ref zsjirbjjlnixcjshrapi --no-verify-jwt
 
-# Resetar banco de dados (necessário se já existir)
-cd backend
-source .venv/bin/activate
-python reset_database.py
-python create_demo_user.py
-cd ..
+# Build completo
+bash build.sh
+
+# Deploy producao
+vercel deploy --prod
 ```
 
-### Instalação Manual
+## Variaveis de Ambiente
 
-#### Backend
-
-```bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate  # No Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+### Frontend (`frontend/.env`)
+```
+VITE_SUPABASE_URL=https://zsjirbjjlnixcjshrapi.supabase.co
+VITE_SUPABASE_ANON_KEY=<anon-key>
+VITE_API_URL=https://zsjirbjjlnixcjshrapi.supabase.co/functions/v1
 ```
 
-Crie um arquivo `.env` na pasta `backend`:
-
-```env
-OPENAI_API_KEY=sua_chave_openai_aqui
-SECRET_KEY=sua_chave_secreta_jwt
+### Supabase Edge Functions (Dashboard > Manage Secrets)
+```
+OPENAI_API_KEY=<openai-key>
+SMTP_USER=<gmail>
+SMTP_PASS=<app-password>
 ```
 
-Resetar e criar banco de dados:
+## Design System — Lavanda Editorial
 
-```bash
-python reset_database.py  # Confirme com 'yes'
-python create_demo_user.py
+- **Fontes**: Fraunces (display) + Outfit (body)
+- **Cores**: warm cream (#FAF8F5), accent lavanda (#7B5EA7)
+- **Principios**: sem gradientes, whitespace generoso, tipografia forte
+- **Animacoes**: Framer Motion, transicoes clean
+
+## Usuario Demo
+
+```
+Email: demo@8patas.com
+Senha: demo123
 ```
 
-Execute o servidor:
+## Autor
 
-```bash
-uvicorn main:app --reload
-```
-
-#### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## 👤 Usuário Demo
-
-Após executar `create_demo_user.py`:
-
-- **Username**: `demo`
-- **Password**: `senha123`
-
-## 🌐 Deploy na Oracle Cloud (Always Free)
-
-### Pré-requisitos
-
-1. Criar conta na Oracle Cloud (Always Free Tier)
-2. Criar uma instância VM.Standard.E2.1.Micro (Always Free)
-3. Configurar firewall para portas 80, 443, 8000
-
-### Passo a Passo
-
-#### 1. Conectar via SSH
-
-```bash
-ssh ubuntu@<seu-ip-publico>
-```
-
-#### 2. Instalar dependências
-
-```bash
-# Atualizar sistema
-sudo apt update && sudo apt upgrade -y
-
-# Instalar Python e Node.js
-sudo apt install python3-pip python3-venv nginx -y
-
-# Instalar Node.js 20
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt install nodejs -y
-```
-
-#### 3. Clonar/Copiar o projeto
-
-```bash
-cd /home/ubuntu
-# Cole seus arquivos aqui
-```
-
-#### 4. Configurar Backend
-
-```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Criar arquivo .env
-nano .env
-```
-
-Criar serviço systemd:
-
-```bash
-sudo nano /etc/systemd/system/8patas-api.service
-```
-
-Conteúdo:
-
-```ini
-[Unit]
-Description=8Patas FastAPI
-After=network.target
-
-[Service]
-Type=simple
-User=ubuntu
-WorkingDirectory=/home/ubuntu/backend
-Environment="PATH=/home/ubuntu/backend/.venv/bin"
-ExecStart=/home/ubuntu/backend/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Ativar serviço:
-
-```bash
-sudo systemctl enable 8patas-api
-sudo systemctl start 8patas-api
-```
-
-#### 5. Configurar Frontend
-
-```bash
-cd frontend
-
-# Atualizar a URL da API em todos os arquivos .jsx
-# Mudar de http://localhost:8000 para http://seu-ip-publico:8000
-
-npm install
-npm run build
-```
-
-#### 6. Configurar Nginx
-
-```bash
-sudo nano /etc/nginx/sites-available/8patas
-```
-
-Conteúdo:
-
-```nginx
-server {
-    listen 80;
-    server_name seu-ip-publico;
-
-    # Frontend
-    location / {
-        root /home/ubuntu/frontend/dist;
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Backend API
-    location /auth/ {
-        proxy_pass http://localhost:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-
-    location /pets/ {
-        proxy_pass http://localhost:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-
-    location /appointments/ {
-        proxy_pass http://localhost:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-Ativar site:
-
-```bash
-sudo ln -s /etc/nginx/sites-available/8patas /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
-```
-
-#### 7. Configurar Firewall Oracle
-
-No console da Oracle Cloud:
-1. Vá em Networking → Virtual Cloud Networks
-2. Clique na sua VCN → Security Lists
-3. Adicione regras de ingress para portas 80, 443, 8000
-
-No servidor:
-
-```bash
-sudo ufw allow 80
-sudo ufw allow 443
-sudo ufw allow 8000
-sudo ufw enable
-```
-
-## 📝 Usuários de Teste
-
-Para criar usuários de teste, você pode usar a interface de Signup ou fazer requisições diretas:
-
-```bash
-curl -X POST http://localhost:8000/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "pedro",
-    "name": "Pedro Pestana",
-    "password": "senha123"
-  }'
-```
-
-## 🎯 Fluxo de Uso
-
-1. **Cadastro**: Criar conta com username e senha
-2. **Login**: Entrar no sistema
-3. **Cadastrar Pet**: Adicionar foto e informações do pet (IA analisa a raça)
-4. **Agendar Consulta**: Sistema sugere datas baseadas na raça do pet
-5. **Dashboard**: Visualizar agendamentos
-
-## 🤖 Integração com OpenAI
-
-A API da OpenAI é usada para:
-
-1. **Análise de Imagem**: Identificar raça do pet pela foto
-2. **Geração de Cuidados**: Criar roteiro personalizado de cuidados
-3. **Sugestão de Consultas**: Recomendar tipos e intervalos de consultas baseados na raça
-
-## 🎨 Paleta de Cores
-
-- Primary: `#8B5CF6` (Roxo vibrante)
-- Primary Light: `#A78BFA`
-- Primary Dark: `#6D28D9`
-- Secondary: `#EC4899` (Rosa)
-- Background: `#FAFAFA`
-- Surface: `#FFFFFF`
-
-## 📄 Licença
-
-Projeto desenvolvido para fins educacionais e demonstração.
-
-## 👨‍💻 Autor
-
-Pedro Pestana - Sistema de Intraempreendedorismo
-
----
-
-**8Patas** - Cuidando do seu pet com tecnologia e carinho 🐾
+Pedro Pestana — Projeto de Intraempreendedorismo FGV

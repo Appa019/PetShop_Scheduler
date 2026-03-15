@@ -56,3 +56,9 @@ docs/superpowers/
 .idea/
 .vscode/
 .vercel
+
+# Screenshots and presentation materials
+slide-*.png
+verify-*.png
+supabase-schema-*.png
+Material/
