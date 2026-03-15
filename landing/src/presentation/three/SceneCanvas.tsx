@@ -34,7 +34,7 @@ export function SceneCanvas({ currentSlide }: SceneCanvasProps) {
   return (
     <div
       className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 1 }}
+      style={{ zIndex: 5 }}
       aria-hidden="true"
     >
       <Canvas
